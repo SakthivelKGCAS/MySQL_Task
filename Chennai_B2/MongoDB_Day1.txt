@@ -1,0 +1,658 @@
+test> show dbs
+EComm         144.00 KiB
+Employee       72.00 KiB
+Kgm_B15        72.00 KiB
+MCAIIM         72.00 KiB
+PVT_Employee  128.00 KiB
+Showroom       72.00 KiB
+Student        72.00 KiB
+admin          40.00 KiB
+config         60.00 KiB
+kgm           144.00 KiB
+local          80.00 KiB
+
+Creating a new Databases
+--------------------------------
+
+test> use kgmchnb2
+switched to db kgmchnb2
+
+Creata a new Collection
+---------------------------
+kgmchnb2> db.createCollection("Stud_det")
+{ ok: 1 }
+
+Show Databases:
+------------------------
+kgmchnb2> show dbs
+EComm         144.00 KiB
+Employee       72.00 KiB
+Kgm_B15        72.00 KiB
+MCAIIM         72.00 KiB
+PVT_Employee  128.00 KiB
+Showroom       72.00 KiB
+Student        72.00 KiB
+admin          40.00 KiB
+config         72.00 KiB
+kgm           144.00 KiB
+kgmchnb2        8.00 KiB
+local          80.00 KiB
+
+Show all the collections
+-------------------------
+kgmchnb2> show collections
+Stud_det
+
+
+kgmchnb2> db.createCollection("Department")
+{ ok: 1 }
+kgmchnb2> db.createCollection("Address")
+{ ok: 1 }
+kgmchnb2> show collections
+Address
+Department
+Stud_det
+
+
+kgmchnb2> db.address.drop()
+false
+kgmchnb2> db.Address.drop()
+true
+kgmchnb2> show collections
+Department
+Stud_det
+
+
+kgmchnb2> db.Stud_det.insertMany([
+
+{
+"FirstName":"Madhu",
+"LastName":"P",
+"Course":"FullStack",
+"m1":82,
+"m2":94,
+"m3":97,
+"Subjects":["HTML","CSS","MongoDB","JS"],
+"Personal":{"age":21,"mobilenumber":7996461310,"emailid":"madhu@gmail.com"}
+},
+{
+"FirstName":"Pandiyan",
+"LastName":"A",
+"Course":"FullStack",
+"m1":12,
+"m2":20,
+"m3":19,
+"Subjects":["HTML","CSS","MongoDB","JS"],
+"Personal":{"age":20,"mobilenumber":9751120145,"emailid":"pandiya@yahoo.co.in"}
+}
+])
+
+
+kgmchnb2> db.Stud_det.insertMany([{"FirstName":"Chola","LastName":"B","Course":"FullStack","m1":60,"m2":50,"m3":67,"Subjects":["HTML","CSS","MongoDB","JS"],"Personal":{"age":21,"mobilenumber":9964613100,"emailid":"chola@gmail.com"}},{"FirstName":"Pallava","LastName":"L","Course":"FullStack","m1":30,"m2":40,"m3":49,"Subjects":["HTML","CSS","MongoDB","JS"],"Personal":{"age":22,"mobilenumber":8851120145,"emailid":"pallava@yahoo.co.in"}}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("649d309de394b02590847c88"),
+    '1': ObjectId("649d309de394b02590847c89")
+  }
+}
+kgmchnb2> db.Stud_det.insertMany([{"FirstName":"Chola","LastName":"S","Course":"FullStack","m1":87,"m2":98,"m3":87,"Subjects":["HTML","CSS","MongoDB","JS"],"Personal":{"age":21,"mobilenumber":67894613180,"emailid":"cholas897@gmail.com"}},{"FirstName":"Samyuktha","LastName":"L","Course":"FullStack","m1":50,"m2":60,"m3":59,"Subjects":["HTML","CSS","MongoDB","JS"],"Personal":{"age":21,"mobilenumber":9812610145,"emailid":"sam5789@yahoo.co.in"}}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("649d3107e394b02590847c8a"),
+    '1': ObjectId("649d3107e394b02590847c8b")
+  }
+}
+kgmchnb2> db.Stud_det.find().pretty()
+[
+  {
+    _id: ObjectId("649d2bb0e394b02590847c85"),
+    FirstName: 'Preethi',
+    LastName: 'R',
+    Course: 'FullStack',
+    m1: 80,
+    m2: 89,
+    m3: 95,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: { age: 20, mobilenumber: 7813131313, emailid: 'preethi@gmail.com' }
+  },
+  {
+    _id: ObjectId("649d2e54e394b02590847c86"),
+    FirstName: 'Madhu',
+    LastName: 'P',
+    Course: 'FullStack',
+    m1: 82,
+    m2: 94,
+    m3: 97,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: { age: 21, mobilenumber: 7996461310, emailid: 'madhu@gmail.com' }
+  },
+  {
+    _id: ObjectId("649d2e54e394b02590847c87"),
+    FirstName: 'Pandiyan',
+    LastName: 'A',
+    Course: 'FullStack',
+    m1: 12,
+    m2: 20,
+    m3: 19,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 20,
+      mobilenumber: 9751120145,
+      emailid: 'pandiya@yahoo.co.in'
+    }
+  },
+  {
+    _id: ObjectId("649d309de394b02590847c88"),
+    FirstName: 'Chola',
+    LastName: 'B',
+    Course: 'FullStack',
+    m1: 60,
+    m2: 50,
+    m3: 67,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: { age: 21, mobilenumber: 9964613100, emailid: 'chola@gmail.com' }
+  },
+  {
+    _id: ObjectId("649d309de394b02590847c89"),
+    FirstName: 'Pallava',
+    LastName: 'L',
+    Course: 'FullStack',
+    m1: 30,
+    m2: 40,
+    m3: 49,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 22,
+      mobilenumber: 8851120145,
+      emailid: 'pallava@yahoo.co.in'
+    }
+  },
+  {
+    _id: ObjectId("649d3107e394b02590847c8a"),
+    FirstName: 'Chola',
+    LastName: 'S',
+    Course: 'FullStack',
+    m1: 87,
+    m2: 98,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 21,
+      mobilenumber: 67894613180,
+      emailid: 'cholas897@gmail.com'
+    }
+  },
+  {
+    _id: ObjectId("649d3107e394b02590847c8b"),
+    FirstName: 'Samyuktha',
+    LastName: 'L',
+    Course: 'FullStack',
+    m1: 50,
+    m2: 60,
+    m3: 59,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 21,
+      mobilenumber: 9812610145,
+      emailid: 'sam5789@yahoo.co.in'
+    }
+  }
+]
+
+
+kgmchnb2> db.Stud_det.findOne({"FirstName":"Chola"})
+{
+  _id: ObjectId("649d309de394b02590847c88"),
+  FirstName: 'Chola',
+  LastName: 'B',
+  Course: 'FullStack',
+  m1: 60,
+  m2: 50,
+  m3: 67,
+}
+
+
+kgmchnb2> db.Stud_det.find({"FirstName":"Chola"})
+[ Personal: { age: 21, mobilenumber: 9964613100, emailid: 'chola@gmail.com' }
+  {
+    _id: ObjectId("649d309de394b02590847c88"),
+    FirstName: 'Chola',
+    LastName: 'B',
+    Course: 'FullStack',
+    m1: 60,
+    m2: 50,
+    m3: 67,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: { age: 21, mobilenumber: 9964613100, emailid: 'chola@gmail.com' }
+  },
+  {
+    _id: ObjectId("649d3107e394b02590847c8a"),
+    FirstName: 'Chola',
+    LastName: 'S',
+    Course: 'FullStack',
+    m1: 87,
+    m2: 98,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 21,
+      mobilenumber: 67894613180,
+      emailid: 'cholas897@gmail.com'
+    }
+  }
+]
+kgmchnb2> db.Stud_det.find({"FirstName":"Pandiyan"})
+[
+  {
+    _id: ObjectId("649d2e54e394b02590847c87"),
+    FirstName: 'Pandiyan',
+    LastName: 'A',
+    Course: 'FullStack',
+    m1: 12,
+    m2: 20,
+    m3: 19,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 20,
+      mobilenumber: 9751120145,
+      emailid: 'pandiya@yahoo.co.in'
+    }
+  }
+]
+
+
+kgmchnb2> db.Stud_det.find({"Personal.age":20})
+[
+  {
+    _id: ObjectId("649d2bb0e394b02590847c85"),
+    FirstName: 'Preethi',
+    LastName: 'R',
+    Course: 'FullStack',
+    m1: 80,
+    m2: 89,
+    m3: 95,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: { age: 20, mobilenumber: 7813131313, emailid: 'preethi@gmail.com' }
+  },
+  {
+    _id: ObjectId("649d2e54e394b02590847c87"),
+    FirstName: 'Pandiyan',
+    LastName: 'A',
+    Course: 'FullStack',
+    m1: 12,
+    m2: 20,
+    m3: 19,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ],
+    Personal: {
+      age: 20,
+      mobilenumber: 9751120145,
+      emailid: 'pandiya@yahoo.co.in'
+    }
+  }
+]
+
+
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0})
+[
+  { FirstName: 'Preethi' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Samyuktha' }
+]
+
+
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,"Personal":1,_id:0})
+[
+  {
+    FirstName: 'Preethi',
+    Personal: { age: 20, mobilenumber: 7813131313, emailid: 'preethi@gmail.com' }
+  },
+  {
+    FirstName: 'Madhu',
+    Personal: { age: 21, mobilenumber: 7996461310, emailid: 'madhu@gmail.com' }
+  },
+  {
+    FirstName: 'Pandiyan',
+    Personal: {
+      age: 20,
+      mobilenumber: 9751120145,
+      emailid: 'pandiya@yahoo.co.in'
+    }
+  },
+  {
+    FirstName: 'Chola',
+    Personal: { age: 21, mobilenumber: 9964613100, emailid: 'chola@gmail.com' }
+  },
+  {
+    FirstName: 'Pallava',
+    Personal: {
+      age: 22,
+      mobilenumber: 8851120145,
+      emailid: 'pallava@yahoo.co.in'
+    }
+  },
+  {
+    FirstName: 'Chola',
+    Personal: {
+      age: 21,
+      mobilenumber: 67894613180,
+      emailid: 'cholas897@gmail.com'
+    }
+  },
+  {
+    FirstName: 'Samyuktha',
+    Personal: {
+      age: 21,
+      mobilenumber: 9812610145,
+      emailid: 'sam5789@yahoo.co.in'
+    }
+  }
+]
+
+count
+-----------
+
+kgmchnb2> db.Stud_det.find().count();
+7
+
+Sorting
+------------------
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).sort({"FirstName":1})
+[
+  { FirstName: 'Chola' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Preethi' },
+  { FirstName: 'Samyuktha' }
+]
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).sort({"FirstName":-1})
+[
+  { FirstName: 'Samyuktha' },
+  { FirstName: 'Preethi' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Chola' }
+]
+
+Retrieving Array data:
+-----------------------------
+
+kgmchnb2> db.Stud_det.find({},{"Subjects":1,_id:0})
+[
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] },
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] },
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] },
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] },
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] },
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] },
+  { Subjects: [ 'HTML', 'CSS', 'MongoDB', 'JS' ] }
+]
+
+kgmchnb2> db.Stud_det.find({"Subjects":"CSS"},{"Subjects.$":1,_id:0})
+[
+  { Subjects: [ 'CSS' ] },
+  { Subjects: [ 'CSS' ] },
+  { Subjects: [ 'CSS' ] },
+  { Subjects: [ 'CSS' ] },
+  { Subjects: [ 'CSS' ] },
+  { Subjects: [ 'CSS' ] },
+  { Subjects: [ 'CSS' ] }
+]
+
+limit and skip
+--------------------------------
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0})
+[
+  { FirstName: 'Preethi' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Samyuktha' }
+]
+
+
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).limit(3)
+[
+  { FirstName: 'Preethi' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pandiyan' }
+]
+
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).limit(2)
+[ { FirstName: 'Preethi' }, { FirstName: 'Madhu' } ]
+
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).limit(4)
+[
+  { FirstName: 'Preethi' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Chola' }
+]
+
+
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0})
+[
+  { FirstName: 'Preethi' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Samyuktha' }
+]
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).limit(3).skip(3)
+[
+  { FirstName: 'Chola' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Chola' }
+]
+kgmchnb2> db.Stud_det.find({},{"FirstName":1,_id:0}).limit(4).skip(2)
+[
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Chola' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Chola' }
+]
+
+Comparison Operators
+------------------------------
+kgmchnb2> db.Stud_det.find({m1:{$gt:40}},{"FirstName":1,"m1":1,_id:0})
+[
+  { FirstName: 'Preethi', m1: 80 },
+  { FirstName: 'Madhu', m1: 82 },
+  { FirstName: 'Chola', m1: 60 },
+  { FirstName: 'Chola', m1: 87 },
+  { FirstName: 'Samyuktha', m1: 50 }
+]
+
+
+kgmchnb2> db.Stud_det.find({m2:{$lt:40}},{"FirstName":1,"m2":1,_id:0})
+[ { FirstName: 'Pandiyan', m2: 20 } ]
+
+
+kgmchnb2> db.Stud_det.find({m3:{$gte:95}},{"FirstName":1,"m3":1,_id:0})
+.sort({FirstName:1})
+
+[ { FirstName: 'Madhu', m3: 97 }, { FirstName: 'Preethi', m3: 95 } ]
+
+
+kgmchnb2> db.Stud_det.find({m2:{$ne:40}},{"FirstName":1,"m2":1,_id:0}).sort({FirstName:1})
+[
+  { FirstName: 'Chola', m2: 50 },
+  { FirstName: 'Chola', m2: 98 },
+  { FirstName: 'Madhu', m2: 94 },
+  { FirstName: 'Pandiyan', m2: 20 },
+  { FirstName: 'Preethi', m2: 89 },
+  { FirstName: 'Samyuktha', m2: 60 }
+]
+
+kgmchnb2> db.Stud_det.find({$and:[{"m1":{$gte:40}},{"m2":{$gte:40}},{"m3":{$gte:40}}]},
+{"FirstName":1,"m1":1,"m2":1,"m3":1,_id:0})
+
+[
+  { FirstName: 'Preethi', m1: 80, m2: 89, m3: 95 },
+  { FirstName: 'Madhu', m1: 82, m2: 94, m3: 97 },
+  { FirstName: 'Chola', m1: 60, m2: 50, m3: 67 },
+  { FirstName: 'Chola', m1: 87, m2: 98, m3: 87 },
+  { FirstName: 'Samyuktha', m1: 50, m2: 60, m3: 59 }
+]
+
+
+kgmchnb2> db.Stud_det.find({$or:[{m1:{$gt:60}},{m2:{$gt:60}},{m3:{$gt:60}}]},
+{FirstName:1,m1:1,m2:1,m3:1,_id:0})
+[
+  { FirstName: 'Preethi', m1: 80, m2: 89, m3: 95 },
+  { FirstName: 'Madhu', m1: 82, m2: 94, m3: 97 },
+  { FirstName: 'Chola', m1: 60, m2: 50, m3: 67 },
+  { FirstName: 'Chola', m1: 87, m2: 98, m3: 87 }
+]
+
+kgmchnb2> db.Stud_det.find({$nor:[{FirstName:"Chola"}]},{FirstName:1,_id:0})
+[
+  { FirstName: 'Preethi' },
+  { FirstName: 'Madhu' },
+  { FirstName: 'Pandiyan' },
+  { FirstName: 'Pallava' },
+  { FirstName: 'Samyuktha' }
+]
+
+Aggregation
+-------------------------------------
+kgmchnb2> db.Emp.insertMany([
+{
+"ename":"Bharath",
+"gender":"Male",
+"doj":new Date("2023-01-12"),
+"salary":45599.99,
+"department":"HR"
+},
+{
+"ename":"Anitha",
+"gender":"Female",
+"doj":new Date("2023-02-24"),
+"salary":15000,
+"department":"admin"
+}
+])
+
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("649d62a1e394b02590847c8c"),
+    '1': ObjectId("649d62a1e394b02590847c8d")
+  }
+}
+
+
+
+kgmchnb2> db.Emp.aggregate({$match:{gender:"Female"}})
+[
+  {
+    _id: ObjectId("649d62a1e394b02590847c8d"),
+    ename: 'Anitha',
+    gender: 'Female',
+    doj: ISODate("2023-02-24T00:00:00.000Z"),
+    salary: 15000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8f"),
+    ename: 'Uma',
+    gender: 'Female',
+    doj: ISODate("2023-03-15T00:00:00.000Z"),
+    salary: 14000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c94"),
+    ename: 'Jaya',
+    gender: 'Female',
+    doj: ISODate("2022-12-21T00:00:00.000Z"),
+    salary: 50699.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c95"),
+    ename: 'Prema',
+    gender: 'Female',
+    doj: ISODate("2023-03-15T00:00:00.000Z"),
+    salary: 14000,
+    department: 'admin'
+  }
+]
+
+
+kgmchnb2> db.Emp.aggregate({$group:{_id:"$gender"}})
+[ { _id: 'Female' }, { _id: 'Male' } ]
+
+
+kgmchnb2> db.Emp.aggregate({$group:{_id:"$department"}})
+[ { _id: 'HR' }, { _id: 'admin' }, { _id: 'Marketing' } ]
+
+
+
+kgmchnb2> db.Emp.aggregate([{$group:{_id:"$gender",Total_Count:{$sum:1}}}])
+
+[ { _id: 'Male', Total_Count: 6 }, { _id: 'Female', Total_Count: 4 } ]
+
+
+kgmchnb2> db.Emp.aggregate([{$group:{_id:"$department",Total_Count:{$sum:1}}}])
+[
+  { _id: 'HR', Total_Count: 3 },
+  { _id: 'Marketing', Total_Count: 4 },
+  { _id: 'admin', Total_Count: 3 }
+]
+
+
+kgmchnb2> db.Emp.aggregate([{$match:{gender:"Male"}},
+{$group:{_id:"$department",Total_Salary:{$sum:"$salary"}}}])
+[
+  { _id: 'HR', Total_Salary: 101299.98 },
+  { _id: 'Marketing', Total_Salary: 100899.98000000001 }
+]
+
+kgmchnb2> db.Emp.aggregate([{$match:{gender:"Female"}},
+{$group:{_id:"$department",Total_Salary:{$sum:"$salary"}}}])
+[
+  { _id: 'admin', Total_Salary: 43000 },
+  { _id: 'HR', Total_Salary: 50699.99 }
+]
+
+kgmchnb2> db.Emp.aggregate([{$match:{gender:"Male"}},
+{$group:{_id:"$department",Average_Salary:{$avg:"$salary"}}}])
+[
+  { _id: 'Marketing', Average_Salary: 25224.995000000003 },
+  { _id: 'HR', Average_Salary: 50649.99 }
+]
+
+kgmchnb2> db.Emp.aggregate([{$match:{gender:"Male"}},
+{$group:{_id:"$department",Maximum_Salary:{$max:"$salary"}}}])
+[
+  { _id: 'Marketing', Maximum_Salary: 30699.99 },
+  { _id: 'HR', Maximum_Salary: 55699.99 }
+]
+
+kgmchnb2> db.Emp.aggregate([{$match:{gender:"Male"}},
+{$group:{_id:"$department",Minimum_Salary:{$min:"$salary"}}}])
+[
+  { _id: 'Marketing', Minimum_Salary: 22199.99 },
+  { _id: 'HR', Minimum_Salary: 45599.99 }
+]
+
+
+
+
+
+
+

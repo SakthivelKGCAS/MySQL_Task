@@ -1,0 +1,376 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| blrdb              |
+| chnbatch2          |
+| information_schema |
+| kgm                |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| workbench          |
+| world              |
++--------------------+
+13 rows in set (0.73 sec)
+
+mysql> use chnbatch2;
+Database changed
+
+mysql> show tables;
+Empty set (0.09 sec)
+
+mysql> create table stud_det(rollno int,name char(25),m1 int,m2 int,m3 int);
+Query OK, 0 rows affected (0.45 sec)
+
+mysql> desc stud_det;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| rollno | int      | YES  |     | NULL    |       |
+| name   | char(25) | YES  |     | NULL    |       |
+| m1     | int      | YES  |     | NULL    |       |
+| m2     | int      | YES  |     | NULL    |       |
+| m3     | int      | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+5 rows in set (0.12 sec)
+
+
+mysql> insert into stud_det(rollno,name,m1,m2,m3)values(101,'Arun',56,63,72);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into stud_det values(102,'Preethi',82,91,100);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into stud_det(rollno,name,m1,m2,m3)values(103,'Madhu',90,100,100),(104,'Jothi',100,99,98),(105,'Ram',12,10,05);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+mysql> insert into stud_det values(113,'Yalini',19,10,12),(123,'Antony',21,40,39);
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from stud_det;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   56 |   63 |   72 |
+|    102 | Preethi |   82 |   91 |  100 |
+|    103 | Madhu   |   90 |  100 |  100 |
+|    104 | Jothi   |  100 |   99 |   98 |
+|    105 | Ram     |   12 |   10 |    5 |
+|    113 | Yalini  |   19 |   10 |   12 |
+|    123 | Antony  |   21 |   40 |   39 |
++--------+---------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select name from stud_det;
++---------+
+| name    |
++---------+
+| Arun    |
+| Preethi |
+| Madhu   |
+| Jothi   |
+| Ram     |
+| Yalini  |
+| Antony  |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> select rollno,name,m3 from stud_det;
++--------+---------+------+
+| rollno | name    | m3   |
++--------+---------+------+
+|    101 | Arun    |   72 |
+|    102 | Preethi |  100 |
+|    103 | Madhu   |  100 |
+|    104 | Jothi   |   98 |
+|    105 | Ram     |    5 |
+|    113 | Yalini  |   12 |
+|    123 | Antony  |   39 |
++--------+---------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from stud_det where rollno = 105;
++--------+------+------+------+------+
+| rollno | name | m1   | m2   | m3   |
++--------+------+------+------+------+
+|    105 | Ram  |   12 |   10 |    5 |
++--------+------+------+------+------+
+1 row in set (0.03 sec)
+
+mysql> select * from stud_det where name = 'jothi';
++--------+-------+------+------+------+
+| rollno | name  | m1   | m2   | m3   |
++--------+-------+------+------+------+
+|    104 | Jothi |  100 |   99 |   98 |
++--------+-------+------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from stud_det;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   56 |   63 |   72 |
+|    102 | Preethi |   82 |   91 |  100 |
+|    103 | Madhu   |   90 |  100 |  100 |
+|    104 | Jothi   |  100 |   99 |   98 |
+|    105 | Ram     |   12 |   10 |    5 |
+|    113 | Yalini  |   19 |   10 |   12 |
+|    123 | Antony  |   21 |   40 |   39 |
++--------+---------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> update stud_det set m1=m1-1, m2=m2-2;
+Query OK, 7 rows affected (0.10 sec)
+Rows matched: 7  Changed: 7  Warnings: 0
+
+mysql> select * from stud_det;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   55 |   61 |   72 |
+|    102 | Preethi |   81 |   89 |  100 |
+|    103 | Madhu   |   89 |   98 |  100 |
+|    104 | Jothi   |   99 |   97 |   98 |
+|    105 | Ram     |   11 |    8 |    5 |
+|    113 | Yalini  |   18 |    8 |   12 |
+|    123 | Antony  |   20 |   38 |   39 |
++--------+---------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> update stud_det set name = 'Rahul' where rollno = 102;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from stud_det;
++--------+--------+------+------+------+
+| rollno | name   | m1   | m2   | m3   |
++--------+--------+------+------+------+
+|    101 | Arun   |   55 |   61 |   72 |
+|    102 | Rahul  |   81 |   89 |  100 |
+|    103 | Madhu  |   89 |   98 |  100 |
+|    104 | Jothi  |   99 |   97 |   98 |
+|    105 | Ram    |   11 |    8 |    5 |
+|    113 | Yalini |   18 |    8 |   12 |
+|    123 | Antony |   20 |   38 |   39 |
++--------+--------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select *,(m1+m2+m3),(m1+m2+m3)/3  from stud_det;
+
++--------+--------+------+------+------+------------+--------------+
+| rollno | name   | m1   | m2   | m3   | (m1+m2+m3) | (m1+m2+m3)/3 |
++--------+--------+------+------+------+------------+--------------+
+|    101 | Arun   |   55 |   61 |   72 |        188 |      62.6667 |
+|    102 | Rahul  |   81 |   89 |  100 |        270 |      90.0000 |
+|    103 | Madhu  |   89 |   98 |  100 |        287 |      95.6667 |
+|    104 | Jothi  |   99 |   97 |   98 |        294 |      98.0000 |
+|    105 | Ram    |   11 |    8 |    5 |         24 |       8.0000 |
+|    113 | Yalini |   18 |    8 |   12 |         38 |      12.6667 |
+|    123 | Antony |   20 |   38 |   39 |         97 |      32.3333 |
++--------+--------+------+------+------+------------+--------------+
+7 rows in set (0.04 sec)
+
+mysql> select *,(m1+m2+m3),(m1+m2+m3)/3  from stud_det limit 2;
++--------+-------+------+------+------+------------+--------------+
+| rollno | name  | m1   | m2   | m3   | (m1+m2+m3) | (m1+m2+m3)/3 |
++--------+-------+------+------+------+------------+--------------+
+|    101 | Arun  |   55 |   61 |   72 |        188 |      62.6667 |
+|    102 | Rahul |   81 |   89 |  100 |        270 |      90.0000 |
++--------+-------+------+------+------+------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select *,(m1+m2+m3),(m1+m2+m3)/3  from stud_det limit 4;
++--------+-------+------+------+------+------------+--------------+
+| rollno | name  | m1   | m2   | m3   | (m1+m2+m3) | (m1+m2+m3)/3 |
++--------+-------+------+------+------+------------+--------------+
+|    101 | Arun  |   55 |   61 |   72 |        188 |      62.6667 |
+|    102 | Rahul |   81 |   89 |  100 |        270 |      90.0000 |
+|    103 | Madhu |   89 |   98 |  100 |        287 |      95.6667 |
+|    104 | Jothi |   99 |   97 |   98 |        294 |      98.0000 |
++--------+-------+------+------+------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select *  from stud_det limit 2 offset 2;
++--------+-------+------+------+------+
+| rollno | name  | m1   | m2   | m3   |
++--------+-------+------+------+------+
+|    103 | Madhu |   89 |   98 |  100 |
+|    104 | Jothi |   99 |   97 |   98 |
++--------+-------+------+------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *  from stud_det limit 5 offset 1;
++--------+--------+------+------+------+
+| rollno | name   | m1   | m2   | m3   |
++--------+--------+------+------+------+
+|    102 | Rahul  |   81 |   89 |  100 |
+|    103 | Madhu  |   89 |   98 |  100 |
+|    104 | Jothi  |   99 |   97 |   98 |
+|    105 | Ram    |   11 |    8 |    5 |
+|    113 | Yalini |   18 |    8 |   12 |
++--------+--------+------+------+------+
+5 rows in set (0.00 sec)
+
+
+mysql> select *  from stud_det;
++--------+--------+------+------+------+
+| rollno | name   | m1   | m2   | m3   |
++--------+--------+------+------+------+
+|    101 | Arun   |   55 |   61 |   72 |
+|    102 | Rahul  |   81 |   89 |  100 |
+|    103 | Madhu  |   89 |   98 |  100 |
+|    104 | Jothi  |   99 |   97 |   98 |
+|    105 | Ram    |   11 |    8 |    5 |
+|    113 | Yalini |   18 |    8 |   12 |
+|    123 | Antony |   20 |   38 |   39 |
++--------+--------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> delete from stud_det where name ='arun';
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select *  from stud_det;
++--------+--------+------+------+------+
+| rollno | name   | m1   | m2   | m3   |
++--------+--------+------+------+------+
+|    102 | Rahul  |   81 |   89 |  100 |
+|    103 | Madhu  |   89 |   98 |  100 |
+|    104 | Jothi  |   99 |   97 |   98 |
+|    105 | Ram    |   11 |    8 |    5 |
+|    113 | Yalini |   18 |    8 |   12 |
+|    123 | Antony |   20 |   38 |   39 |
++--------+--------+------+------+------+
+6 rows in set (0.00 sec)
+
+mysql> delete from stud_det;
+Query OK, 6 rows affected (0.09 sec)
+
+mysql> select *  from stud_det;
+Empty set (0.00 sec)
+
+mysql> select * from stud_det;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   56 |   63 |   72 |
+|    102 | Preethi |   82 |   91 |  100 |
+|    103 | Madhu   |   90 |  100 |  100 |
+|    104 | Jothi   |  100 |   99 |   98 |
+|    105 | Ram     |   12 |   10 |    5 |
+|    113 | Yalini  |   19 |   10 |   12 |
+|    123 | Antony  |   21 |   40 |   39 |
++--------+---------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> truncate table stud_det;
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> select * from stud_det;
+Empty set (0.00 sec)
+
+mysql> select name,m1 from stud_det where m1>=80;
++---------+------+
+| name    | m1   |
++---------+------+
+| Preethi |   82 |
+| Madhu   |   90 |
+| Jothi   |  100 |
++---------+------+
+3 rows in set (0.04 sec)
+
+mysql> select name,m1 from stud_det where m1>90;
++-------+------+
+| name  | m1   |
++-------+------+
+| Jothi |  100 |
++-------+------+
+1 row in set (0.00 sec)
+
+mysql> select rollno,name,m2 from stud_det where m2<40;
++--------+--------+------+
+| rollno | name   | m2   |
++--------+--------+------+
+|    105 | Ram    |   10 |
+|    113 | Yalini |   10 |
++--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select rollno,name,m2 from stud_det where m2<=40;
++--------+--------+------+
+| rollno | name   | m2   |
++--------+--------+------+
+|    105 | Ram    |   10 |
+|    113 | Yalini |   10 |
+|    123 | Antony |   40 |
++--------+--------+------+
+3 rows in set (0.00 sec)
+
+
+mysql> select rollno,name,m2 from stud_det where m2 <> 100;
++--------+---------+------+
+| rollno | name    | m2   |
++--------+---------+------+
+|    101 | Arun    |   63 |
+|    102 | Preethi |   91 |
+|    104 | Jothi   |   99 |
+|    105 | Ram     |   10 |
+|    113 | Yalini  |   10 |
+|    123 | Antony  |   40 |
++--------+---------+------+
+6 rows in set (0.00 sec)
+
+mysql> select rollno,name,m2 from stud_det where m2 = 100;
++--------+-------+------+
+| rollno | name  | m2   |
++--------+-------+------+
+|    103 | Madhu |  100 |
++--------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from stud_det where m1>=40 and m2>=40 and m3>=40;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   56 |   63 |   72 |
+|    102 | Preethi |   82 |   91 |  100 |
+|    103 | Madhu   |   90 |  100 |  100 |
+|    104 | Jothi   |  100 |   99 |   98 |
++--------+---------+------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from stud_det where m1>=40 or m2>=40 or m3>=40;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   56 |   63 |   72 |
+|    102 | Preethi |   82 |   91 |  100 |
+|    103 | Madhu   |   90 |  100 |  100 |
+|    104 | Jothi   |  100 |   99 |   98 |
+|    123 | Antony  |   21 |   40 |   39 |
++--------+---------+------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from stud_det where not name = 'Ram';
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   56 |   63 |   72 |
+|    102 | Preethi |   82 |   91 |  100 |
+|    103 | Madhu   |   90 |  100 |  100 |
+|    104 | Jothi   |  100 |   99 |   98 |
+|    113 | Yalini  |   19 |   10 |   12 |
+|    123 | Antony  |   21 |   40 |   39 |
++--------+---------+------+------+------+
+6 rows in set (0.00 sec)
+
+
+
+

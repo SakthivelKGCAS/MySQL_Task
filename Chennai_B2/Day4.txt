@@ -1,0 +1,398 @@
+mysql> create table room_book(roomno int,roomtype char(10),checkIn datetime,
+price double(10,2) check(price>500 and price<5000));
+Query OK, 0 rows affected, 1 warning (2.15 sec)
+
+mysql> desc room_book;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| roomno   | int          | YES  |     | NULL    |       |
+| roomtype | char(10)     | YES  |     | NULL    |       |
+| checkIn  | datetime     | YES  |     | NULL    |       |
+| price    | double(10,2) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.06 sec)
+
+mysql> alter table room_book modify roomno int primary key;
+Query OK, 0 rows affected (1.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc room_book;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| roomno   | int          | NO   | PRI | NULL    |       |
+| roomtype | char(10)     | YES  |     | NULL    |       |
+| checkIn  | datetime     | YES  |     | NULL    |       |
+| price    | double(10,2) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into room_book values(01,'AC','2023-05-27 08:20:30',1500.00);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> insert into room_book values(02,'NonAC','2023-06-02 10:45:60',600.00);
+ERROR 1292 (22007): Incorrect datetime value: '2023-06-02 10:45:60' for column 'checkIn' at row 1
+mysql> insert into room_book values(02,'NonAC','2023-06-02 10:45:40',600.00);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into room_book values(02,'DeluxeAC','2023-06-27 10:45:40',3500.00);
+ERROR 1062 (23000): Duplicate entry '2' for key 'room_book.PRIMARY'
+mysql> insert into room_book values(13,'DeluxeAC','2023-06-27 10:45:40',3500.00);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into room_book values(14,'UDexAC','2023-05-12 21:10:10',4999.99);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
++--------+----------+---------------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into room_book values(15,'UDexAC','2023-06-22 12:10:10',5000.00);
+ERROR 3819 (HY000): Check constraint 'room_book_chk_1' is violated.
+mysql> insert into room_book values(15,'UDexAC','2023-06-22 12:10:10',6000.00);
+ERROR 3819 (HY000): Check constraint 'room_book_chk_1' is violated.
+mysql> insert into room_book values(15,'nonac','2023-06-22 12:10:10',500.00);
+ERROR 3819 (HY000): Check constraint 'room_book_chk_1' is violated.
+mysql> insert into room_book values(15,'nonac','2023-06-22 12:10:10',450.00);
+ERROR 3819 (HY000): Check constraint 'room_book_chk_1' is violated.
+mysql> insert into room_book values(15,'DNonAC','2023-06-22 12:10:10',1200.00);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from prod_det;
++-----+------------+----------+
+| pid | pname      | price    |
++-----+------------+----------+
+| 101 | Iphone11   | 45899.99 |
+| 102 | Iphone14   | 75899.99 |
+| 156 | Samsung    | 21000.00 |
+| 163 | Oppo       | 30000.00 |
+| 170 | SamsungPro | 23000.00 |
+| 175 | Realme     | 32899.99 |
+| 182 | Nokia      | 15899.99 |
+| 193 | Vivo       | 25000.00 |
++-----+------------+----------+
+8 rows in set (0.05 sec)
+
+mysql> select * from cust_det;
++------+------------+-------------+------+
+| cid  | cname      | location    | pid  |
++------+------------+-------------+------+
+|  203 | Jayaseelan | Singapore   |  182 |
+| 2001 | Bharath    | Chennai     |  156 |
+| 2002 | Pradeep    | Cuddalore   |  102 |
+| 2013 | Venki      | USA         |  170 |
+| 2070 | Bhaskaran  | Kanchipuram |  193 |
++------+------------+-------------+------+
+5 rows in set (0.03 sec)
+
+mysql> select cust_det.cname,prod_det.pname,cust_det.location,prod_det.price from 
+prod_det inner join cust_det on prod_det.pid = cust_det.pid;
+
++------------+------------+-------------+----------+
+| cname      | pname      | location    | price    |
++------------+------------+-------------+----------+
+| Jayaseelan | Nokia      | Singapore   | 15899.99 |
+| Bharath    | Samsung    | Chennai     | 21000.00 |
+| Pradeep    | Iphone14   | Cuddalore   | 75899.99 |
+| Venki      | SamsungPro | USA         | 23000.00 |
+| Bhaskaran  | Vivo       | Kanchipuram | 25000.00 |
++------------+------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql> select c.cname,p.pname,c.location,p.price from prod_det as p inner join
+ cust_det as c on p.pid = c.pid;
++------------+------------+-------------+----------+
+| cname      | pname      | location    | price    |
++------------+------------+-------------+----------+
+| Jayaseelan | Nokia      | Singapore   | 15899.99 |
+| Bharath    | Samsung    | Chennai     | 21000.00 |
+| Pradeep    | Iphone14   | Cuddalore   | 75899.99 |
+| Venki      | SamsungPro | USA         | 23000.00 |
+| Bhaskaran  | Vivo       | Kanchipuram | 25000.00 |
++------------+------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql> select b.bno,b.bdate,p.pname,p.price,c.cname,c.location,b.billamount from
+ prod_det as p inner join cust_det as c on p.pid = c.pid inner join bill as b 
+on c.cid = b.cid;
+
+
++------+------------+----------+----------+------------+-----------+------------+
+| bno  | bdate      | pname    | price    | cname      | location  | billamount |
++------+------------+----------+----------+------------+-----------+------------+
+|    1 | 2023-03-12 | Nokia    | 15899.99 | Jayaseelan | Singapore |   16500.50 |
+| 3500 | 2023-04-04 | Samsung  | 21000.00 | Bharath    | Chennai   |   22555.50 |
+| 3501 | 2023-06-22 | Iphone14 | 75899.99 | Pradeep    | Cuddalore |   77555.50 |
++------+------------+----------+----------+------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from prod_det;
++-----+------------+----------+
+| pid | pname      | price    |
++-----+------------+----------+
+| 101 | Iphone11   | 45899.99 |
+| 102 | Iphone14   | 75899.99 |
+| 156 | Samsung    | 21000.00 |
+| 163 | Oppo       | 30000.00 |
+| 170 | SamsungPro | 23000.00 |
+| 175 | Realme     | 32899.99 |
+| 182 | Nokia      | 15899.99 |
+| 193 | Vivo       | 25000.00 |
++-----+------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from cust_det;
++------+------------+-------------+------+
+| cid  | cname      | location    | pid  |
++------+------------+-------------+------+
+|  203 | Jayaseelan | Singapore   |  182 |
+| 2001 | Bharath    | Chennai     |  156 |
+| 2002 | Pradeep    | Cuddalore   |  102 |
+| 2013 | Venki      | USA         |  170 |
+| 2070 | Bhaskaran  | Kanchipuram |  193 |
++------+------------+-------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from cust_det as c right join prod_det as p on c.pid = p.pid;
++------+------------+-------------+------+-----+------------+----------+
+| cid  | cname      | location    | pid  | pid | pname      | price    |
++------+------------+-------------+------+-----+------------+----------+
+| NULL | NULL       | NULL        | NULL | 101 | Iphone11   | 45899.99 |
+| 2002 | Pradeep    | Cuddalore   |  102 | 102 | Iphone14   | 75899.99 |
+| 2001 | Bharath    | Chennai     |  156 | 156 | Samsung    | 21000.00 |
+| NULL | NULL       | NULL        | NULL | 163 | Oppo       | 30000.00 |
+| 2013 | Venki      | USA         |  170 | 170 | SamsungPro | 23000.00 |
+| NULL | NULL       | NULL        | NULL | 175 | Realme     | 32899.99 |
+|  203 | Jayaseelan | Singapore   |  182 | 182 | Nokia      | 15899.99 |
+| 2070 | Bhaskaran  | Kanchipuram |  193 | 193 | Vivo       | 25000.00 |
++------+------------+-------------+------+-----+------------+----------+
+8 rows in set (0.00 sec)
+
+
+mysql> select * from bill;
++------+------+------+------------+------------+
+| bno  | pid  | cid  | bdate      | billamount |
++------+------+------+------------+------------+
+|    1 |  182 |  203 | 2023-03-12 |   16500.50 |
+| 3500 |  156 | 2001 | 2023-04-04 |   22555.50 |
+| 3501 |  102 | 2002 | 2023-06-22 |   77555.50 |
++------+------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from cust_det as c left join bill as b on c.cid = b.cid;
++------+------------+-------------+------+------+------+------+------------+------------+
+| cid  | cname      | location    | pid  | bno  | pid  | cid  | bdate      | billamount |
++------+------------+-------------+------+------+------+------+------------+------------+
+|  203 | Jayaseelan | Singapore   |  182 |    1 |  182 |  203 | 2023-03-12 |   16500.50 |
+| 2001 | Bharath    | Chennai     |  156 | 3500 |  156 | 2001 | 2023-04-04 |   22555.50 |
+| 2002 | Pradeep    | Cuddalore   |  102 | 3501 |  102 | 2002 | 2023-06-22 |   77555.50 |
+| 2013 | Venki      | USA         |  170 | NULL | NULL | NULL | NULL       |       NULL |
+| 2070 | Bhaskaran  | Kanchipuram |  193 | NULL | NULL | NULL | NULL       |       NULL |
++------+------------+-------------+------+------+------+------+------------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select p.pname,c.cname from prod_det as p cross join cust_det as c;
+
+
++------------+------------+
+| pname      | cname      |
++------------+------------+
+| Iphone11   | Bhaskaran  |
+| Iphone11   | Venki      |
+| Iphone11   | Pradeep    |
+| Iphone11   | Bharath    |
+| Iphone11   | Jayaseelan |
+| Iphone14   | Bhaskaran  |
+| Iphone14   | Venki      |
+| Iphone14   | Pradeep    |
+| Iphone14   | Bharath    |
+| Iphone14   | Jayaseelan |
+| Samsung    | Bhaskaran  |
+| Samsung    | Venki      |
+| Samsung    | Pradeep    |
+| Samsung    | Bharath    |
+| Samsung    | Jayaseelan |
+| Oppo       | Bhaskaran  |
+| Oppo       | Venki      |
+| Oppo       | Pradeep    |
+| Oppo       | Bharath    |
+| Oppo       | Jayaseelan |
+| SamsungPro | Bhaskaran  |
+| SamsungPro | Venki      |
+| SamsungPro | Pradeep    |
+| SamsungPro | Bharath    |
+| SamsungPro | Jayaseelan |
+| Realme     | Bhaskaran  |
+| Realme     | Venki      |
+| Realme     | Pradeep    |
+| Realme     | Bharath    |
+| Realme     | Jayaseelan |
+| Nokia      | Bhaskaran  |
+| Nokia      | Venki      |
+| Nokia      | Pradeep    |
+| Nokia      | Bharath    |
+| Nokia      | Jayaseelan |
+| Vivo       | Bhaskaran  |
+| Vivo       | Venki      |
+| Vivo       | Pradeep    |
+| Vivo       | Bharath    |
+| Vivo       | Jayaseelan |
++------------+------------+
+40 rows in set (0.00 sec)
+
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.03 sec)
+
+mysql> set autocommit = 0;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> insert into room_book values(16,'NAC','2023-05-16 09:30:15',890);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
+|     16 | NAC      | 2023-05-16 09:30:15 |  890.00 |
++--------+----------+---------------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update room_book set price = 800 where roomno = 2;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> delete from room_book;
+Query OK, 5 rows affected (0.06 sec)
+
+mysql> select * from room_book;
+Empty set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  600.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update room_book set price = 800 where roomno = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)

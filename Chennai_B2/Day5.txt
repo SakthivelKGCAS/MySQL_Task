@@ -1,0 +1,660 @@
+Replace: Update + Insert
+
+ - Replace is used to update the existing records if available else it inserts a
+new record.
+
+  - It works only in primary key
+
+syntax:
+
+> replace into tablename set columnname = value(columnlist);
+
+
+mysql> desc room_book;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| roomno   | int          | NO   | PRI | NULL    |       |
+| roomtype | char(10)     | YES  |     | NULL    |       |
+| checkIn  | datetime     | YES  |     | NULL    |       |
+| price    | double(10,2) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.20 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-05-27 08:20:30 | 1500.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.10 sec)
+
+mysql> replace into room_book set roomno=1,price=1750;
+Query OK, 2 rows affected (0.31 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | NULL     | NULL                | 1750.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> replace into room_book set roomno=1,roomtype='AC',CheckIn='2023-06-28 06:30:20',
+price=1750;
+
+Query OK, 2 rows affected (0.13 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-06-28 06:30:20 | 1750.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
++--------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> replace into room_book set roomno=21,roomtype='ACUltra',CheckIn='2023-06-26 07:10:20',price=4750;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------+
+| roomno | roomtype | checkIn             | price   |
++--------+----------+---------------------+---------+
+|      1 | AC       | 2023-06-28 06:30:20 | 1750.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 1200.00 |
+|     21 | ACUltra  | 2023-06-26 07:10:20 | 4750.00 |
++--------+----------+---------------------+---------+
+6 rows in set (0.00 sec)
+
+
+
+mysql> select adddate('2023-06-28',interval 20 day);
++---------------------------------------+
+| adddate('2023-06-28',interval 20 day) |
++---------------------------------------+
+| 2023-07-18                            |
++---------------------------------------+
+1 row in set (0.05 sec)
+
+mysql> select adddate('2023-06-28',interval 30 week);
++----------------------------------------+
+| adddate('2023-06-28',interval 30 week) |
++----------------------------------------+
+| 2024-01-24                             |
++----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select adddate('2023-06-28',interval 60 month);
++-----------------------------------------+
+| adddate('2023-06-28',interval 60 month) |
++-----------------------------------------+
+| 2028-06-28                              |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select addtime('12:20:30','06:45:30');
++--------------------------------+
+| addtime('12:20:30','06:45:30') |
++--------------------------------+
+| 19:06:00                       |
++--------------------------------+
+1 row in set (0.06 sec)
+
+mysql> select convert_tz('2023-06-28 11:32:40','+05:30','+09:00');
++-----------------------------------------------------+
+| convert_tz('2023-06-28 11:32:40','+05:30','+09:00') |
++-----------------------------------------------------+
+| 2023-06-28 15:02:40                                 |
++-----------------------------------------------------+
+1 row in set (0.08 sec)
+
+mysql> select convert_tz('2023-06-28 11:32:40','+05:30','+08:00');
++-----------------------------------------------------+
+| convert_tz('2023-06-28 11:32:40','+05:30','+08:00') |
++-----------------------------------------------------+
+| 2023-06-28 14:02:40                                 |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select convert_tz('2023-06-28 11:32:40','+05:30','+12:00');
++-----------------------------------------------------+
+| convert_tz('2023-06-28 11:32:40','+05:30','+12:00') |
++-----------------------------------------------------+
+| 2023-06-28 18:02:40                                 |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select convert_tz('2023-06-28 11:32:40','+05:30','-10:00');
++-----------------------------------------------------+
+| convert_tz('2023-06-28 11:32:40','+05:30','-10:00') |
++-----------------------------------------------------+
+| 2023-06-27 20:02:40                                 |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select convert_tz('2023-06-28 11:32:40','+05:30','+01:00');
++-----------------------------------------------------+
+| convert_tz('2023-06-28 11:32:40','+05:30','+01:00') |
++-----------------------------------------------------+
+| 2023-06-28 07:02:40                                 |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select curdate();
++------------+
+| curdate()  |
++------------+
+| 2023-06-28 |
++------------+
+1 row in set (0.04 sec)
+
+
+mysql> select current_time();
++----------------+
+| current_time() |
++----------------+
+| 11:38:11       |
++----------------+
+1 row in set (0.04 sec)
+
+mysql> select current_timestamp();
++---------------------+
+| current_timestamp() |
++---------------------+
+| 2023-06-28 11:38:25 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2023-06-28 11:38:33 |
++---------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select datediff('2023-06-28','2023-06-01');
++-------------------------------------+
+| datediff('2023-06-28','2023-06-01') |
++-------------------------------------+
+|                                  27 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> update room_book set checkout = adddate(checkin,interval 3 day);
+Query OK, 6 rows affected (0.05 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from room_book;
++--------+----------+---------------------+---------------------+---------+
+| roomno | roomtype | checkIn             | checkout            | price   |
++--------+----------+---------------------+---------------------+---------+
+|      1 | AC       | 2023-06-28 06:30:20 | 2023-07-01 06:30:20 | 1750.00 |
+|      2 | NonAC    | 2023-06-02 10:45:40 | 2023-06-05 10:45:40 |  800.00 |
+|     13 | DeluxeAC | 2023-06-27 10:45:40 | 2023-06-30 10:45:40 | 3500.00 |
+|     14 | UDexAC   | 2023-05-12 21:10:10 | 2023-05-15 21:10:10 | 4999.99 |
+|     15 | DNonAC   | 2023-06-22 12:10:10 | 2023-06-25 12:10:10 | 1200.00 |
+|     21 | ACUltra  | 2023-06-26 07:10:20 | 2023-06-29 07:10:20 | 4750.00 |
++--------+----------+---------------------+---------------------+---------+
+6 rows in set (0.01 sec)
+
+mysql> select datediff(checkout,checkin) from room_book;
++----------------------------+
+| datediff(checkout,checkin) |
++----------------------------+
+|                          3 |
+|                          3 |
+|                          3 |
+|                          3 |
+|                          3 |
+|                          3 |
++----------------------------+
+6 rows in set (0.00 sec)
+
+
+mysql> select day(checkin) from room_book;
++--------------+
+| day(checkin) |
++--------------+
+|           28 |
+|            2 |
+|           27 |
+|           12 |
+|           22 |
+|           26 |
++--------------+
+6 rows in set (0.06 sec)
+
+
+mysql> select date_format(checkin,'%D,%M,%Y,%W,%p') from room_book;
++---------------------------------------+
+| date_format(checkin,'%D,%M,%Y,%W,%p') |
++---------------------------------------+
+| 28th,June,2023,Wednesday,AM           |
+| 2nd,June,2023,Friday,AM               |
+| 27th,June,2023,Tuesday,AM             |
+| 12th,May,2023,Friday,PM               |
+| 22nd,June,2023,Thursday,PM            |
+| 26th,June,2023,Monday,AM              |
++---------------------------------------+
+6 rows in set (0.00 sec)
+
+Sub-Query
+-------------------
+
+mysql> select * from cust_det;
++------+------------+-------------+------+
+| cid  | cname      | location    | pid  |
++------+------------+-------------+------+
+|  203 | Jayaseelan | Singapore   |  182 |
+| 2001 | Bharath    | Chennai     |  156 |
+| 2002 | Pradeep    | Cuddalore   |  102 |
+| 2013 | Venki      | USA         |  170 |
+| 2070 | Bhaskaran  | Kanchipuram |  193 |
++------+------------+-------------+------+
+5 rows in set (0.10 sec)
+
+mysql> select * from bill;
++------+------+------+------------+------------+
+| bno  | pid  | cid  | bdate      | billamount |
++------+------+------+------------+------------+
+|    1 |  182 |  203 | 2023-03-12 |   16500.50 |
+| 3500 |  156 | 2001 | 2023-04-04 |   22555.50 |
+| 3501 |  102 | 2002 | 2023-06-22 |   77555.50 |
++------+------+------+------------+------------+
+3 rows in set (0.06 sec)
+
+mysql> select cid,cname,pid from cust_det where pid in 
+(select pid  from bill where billamount>20000);
+
+
++------+---------+------+
+| cid  | cname   | pid  |
++------+---------+------+
+| 2001 | Bharath |  156 |
+| 2002 | Pradeep |  102 |
++------+---------+------+
+2 rows in set (0.09 sec)
+
+
+mysql> select pid,cid,billamount from bill where billamount = 
+(select max(billamount) from bill);
+
+
++------+------+------------+
+| pid  | cid  | billamount |
++------+------+------------+
+|  102 | 2002 |   77555.50 |
++------+------+------------+
+1 row in set (0.08 sec)
+
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
++--------+------------+-------------+-----------+
+11 rows in set (0.11 sec)
+
+
+mysql> select * from emp_det where salary > ALL
+ (select salary from emp_det where designation = 'Tester');
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
++--------+------------+-------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp_det where salary > ALL 
+(select salary from emp_det where designation = 'Webdesigner');
++-------+---------+-------------+-----------+
+| empid | empname | designation | salary    |
++-------+---------+-------------+-----------+
+| dev01 | Madhu   | FullStack   | 100000.00 |
+| dev02 | Preethi | FullStack   | 100000.00 |
++-------+---------+-------------+-----------+
+2 rows in set (0.04 sec)
+
+mysql> select * from emp_det where salary < ALL 
+(select salary from emp_det where designation = 'fullstack');
+
++--------+---------+-------------+----------+
+| empid  | empname | designation | salary   |
++--------+---------+-------------+----------+
+| des51  | hari    | WebDesigner | 27000.00 |
+| Test02 | Lal     | Tester      | 18000.00 |
+| Test03 | Madhan  | Tester      | 18000.00 |
+| Test04 | Antony  | Tester      | 15555.00 |
++--------+---------+-------------+----------+
+4 rows in set (0.00 sec)
+
+
+Views
+-------------------------
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
++--------+------------+-------------+-----------+
+11 rows in set (0.14 sec)
+
+mysql> create view v1 as select empname,salary from emp_det;
+Query OK, 0 rows affected (0.77 sec)
+
+mysql> desc v1;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| empname | varchar(25)  | YES  |     | NULL    |       |
+| salary  | double(10,2) | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+2 rows in set (0.31 sec)
+
+mysql> select * from v1;
++------------+-----------+
+| empname    | salary    |
++------------+-----------+
+| Madhu      | 100000.00 |
+| Preethi    | 100000.00 |
+| Bharath    |  70000.00 |
+| hari       |  27000.00 |
+| Jasline    |  30000.00 |
+| Pooja      |  50000.00 |
+| Jayaseelan |  75000.00 |
+| Lal        |  18000.00 |
+| Bhaskaran  |  50000.00 |
+| Madhan     |  18000.00 |
+| Antony     |  15555.00 |
++------------+-----------+
+11 rows in set (0.04 sec)
+
+
+mysql> drop view v1;
+Query OK, 0 rows affected (0.18 sec)
+
+
+
+
+mysql> select * from emp_det where salary < ALL 
+(select salary from emp_det where designation = 'fullstack');
++--------+---------+-------------+----------+
+| empid  | empname | designation | salary   |
++--------+---------+-------------+----------+
+| des51  | hari    | WebDesigner | 27000.00 |
+| Test02 | Lal     | Tester      | 18000.00 |
+| Test03 | Madhan  | Tester      | 18000.00 |
+| Test04 | Antony  | Tester      | 15555.00 |
++--------+---------+-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> create view lessalaryFS as select * from emp_det where salary < ALL
+(select salary from emp_det where designation = 'fullstack');
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> select * from lessalaryfs;
++--------+---------+-------------+----------+
+| empid  | empname | designation | salary   |
++--------+---------+-------------+----------+
+| des51  | hari    | WebDesigner | 27000.00 |
+| Test02 | Lal     | Tester      | 18000.00 |
+| Test03 | Madhan  | Tester      | 18000.00 |
+| Test04 | Antony  | Tester      | 15555.00 |
++--------+---------+-------------+----------+
+4 rows in set (0.02 sec)
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
++--------+------------+-------------+-----------+
+11 rows in set (0.00 sec)
+
+mysql> select * from emp_det where designation= "Tester";
++--------+---------+-------------+----------+
+| empid  | empname | designation | salary   |
++--------+---------+-------------+----------+
+| Test02 | Lal     | Tester      | 18000.00 |
+| Test03 | Madhan  | Tester      | 18000.00 |
+| Test04 | Antony  | Tester      | 15555.00 |
++--------+---------+-------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> explain select * from emp_det where designation= "Tester";
++----+-------------+---------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table   | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+---------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | emp_det | NULL       | ALL  | NULL          | NULL | NULL    | NULL |   11 |    10.00 | Using where |
++----+-------------+---------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.07 sec)
+
+mysql> create index InDes on emp_det(designation);
+Query OK, 0 rows affected (2.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> explain select * from emp_det where designation= "Tester";
++----+-------------+---------+------------+------+---------------+-------+---------+-------+------+----------+-------+
+| id | select_type | table   | partitions | type | possible_keys | key   | key_len | ref   | rows | filtered | Extra |
++----+-------------+---------+------------+------+---------------+-------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | emp_det | NULL       | ref  | InDes         | InDes | 103     | const |    3 |   100.00 | NULL  |
++----+-------------+---------+------------+------+---------------+-------+---------+-------+------+----------+-------+
+1 row in set, 1 warning (0.02 sec)
+
+
+DCL:
+-------------------------
+
+mysql> create user 'kgmchennai'@'localhost' identified by 'kgmchennai';
+Query OK, 0 rows affected (0.15 sec)
+
+
+mysql> set password for 'kgmchennai'@'localhost' = 'kgm@123';
+Query OK, 0 rows affected (0.20 sec)
+
+
+mysql> alter user kgmchennai@localhost identified by 'kgm@1234';
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| abc              |
+| kgm              |
+| kgmblr           |
+| kgmchennai       |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
+| student1         |
++------------------+
+9 rows in set (0.09 sec)
+
+
+mysql> grant select on emp_det to 'kgmchennai'@'localhost';
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> show grants for 'kgmchennai'@'localhost';
++-------------------------------------------------------------------+
+| Grants for kgmchennai@localhost                                   |
++-------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `kgmchennai`@`localhost`                    |
+| GRANT SELECT ON `chnbatch2`.`emp_det` TO `kgmchennai`@`localhost` |
++-------------------------------------------------------------------+
+2 rows in set (0.04 sec)
+
+Microsoft Windows [Version 10.0.19045.3086]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\user>cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u kgmchennai -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| chnbatch2          |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.63 sec)
+
+mysql> use chnbatch2;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_chnbatch2 |
++---------------------+
+| emp_det             |
++---------------------+
+1 row in set (0.30 sec)
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
++--------+------------+-------------+-----------+
+11 rows in set (0.03 sec)
+
+mysql> insert into emp_det values('dev06','Raja','WebDesigner',25800.00);
+ERROR 1142 (42000): INSERT command denied to user 'kgmchennai'@'localhost' for table 'emp_det'
+
+mysql> grant insert on emp_det to 'kgmchennai'@'localhost';
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show grants for 'kgmchennai'@'localhost';
++---------------------------------------------------------------------------+
+| Grants for kgmchennai@localhost                                           |
++---------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `kgmchennai`@`localhost`                            |
+| GRANT SELECT, INSERT ON `chnbatch2`.`emp_det` TO `kgmchennai`@`localhost` |
++---------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into emp_det values('dev06','Raja','WebDesigner',25800.00);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
+| dev06  | Raja       | WebDesigner |  25800.00 |
++--------+------------+-------------+-----------+
+12 rows in set (0.00 sec)
+
+mysql> revoke insert on emp_det from 'kgmchennai'@'localhost';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> show grants for 'kgmchennai'@'localhost';
++-------------------------------------------------------------------+
+| Grants for kgmchennai@localhost                                   |
++-------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `kgmchennai`@`localhost`                    |
+| GRANT SELECT ON `chnbatch2`.`emp_det` TO `kgmchennai`@`localhost` |
++-------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+mysql> insert into emp_det values('dev89','Umar','WebDesigner',23800.00);
+ERROR 1142 (42000): INSERT command denied to user 'kgmchennai'@'localhost' for table 'emp_det'
+
+
+
+
+

@@ -1,0 +1,1276 @@
+kgmchnb2> db.Emp.find()
+[
+  {
+    _id: ObjectId("649d62a1e394b02590847c8c"),
+    ename: 'Bharath',
+    gender: 'Male',
+    doj: ISODate("2023-01-12T00:00:00.000Z"),
+    salary: 45599.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d62a1e394b02590847c8d"),
+    ename: 'Anitha',
+    gender: 'Female',
+    doj: ISODate("2023-02-24T00:00:00.000Z"),
+    salary: 15000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8e"),
+    ename: 'Antony',
+    gender: 'Male',
+    doj: ISODate("2022-08-01T18:30:00.000Z"),
+    salary: 55699.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8f"),
+    ename: 'Uma',
+    gender: 'Female',
+    doj: ISODate("2023-03-15T00:00:00.000Z"),
+    salary: 14000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c90"),
+    ename: 'Pradhap',
+    gender: 'Male',
+    doj: ISODate("2022-09-20T00:00:00.000Z"),
+    salary: 30699.99,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c91"),
+    ename: 'Raghu',
+    gender: 'Male',
+    doj: ISODate("2023-01-12T00:00:00.000Z"),
+    salary: 24000,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c92"),
+    ename: 'Vinoth',
+    gender: 'Male',
+    doj: ISODate("2023-04-21T00:00:00.000Z"),
+    salary: 22199.99,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c93"),
+    ename: 'Sethu',
+    gender: 'Male',
+    doj: ISODate("2023-01-12T00:00:00.000Z"),
+    salary: 24000,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c94"),
+    ename: 'Jaya',
+    gender: 'Female',
+    doj: ISODate("2022-12-21T00:00:00.000Z"),
+    salary: 50699.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c95"),
+    ename: 'Prema',
+    gender: 'Female',
+    doj: ISODate("2023-03-15T00:00:00.000Z"),
+    salary: 14000,
+    department: 'admin'
+  }
+]
+
+
+
+kgmchnb2> db.Emp.updateOne({"department":"Marketing"},{$set:{"salary":23000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+kgmchnb2> db.Emp.find({},{department:1,_id:0})
+[
+  { department: 'HR' },
+  { department: 'admin' },
+  { department: 'HR' },
+  { department: 'admin' },
+  { department: 'Marketing' },
+  { department: 'Marketing' },
+  { department: 'Marketing' },
+  { department: 'Marketing' },
+  { department: 'HR' },
+  { department: 'admin' }
+]
+kgmchnb2> db.Emp.find({},{department:1,salary:1,_id:0})
+[
+  { salary: 45599.99, department: 'HR' },
+  { salary: 15000, department: 'admin' },
+  { salary: 55699.99, department: 'HR' },
+  { salary: 14000, department: 'admin' },
+  { salary: 23000, department: 'Marketing' },
+  { salary: 24000, department: 'Marketing' },
+  { salary: 22199.99, department: 'Marketing' },
+  { salary: 24000, department: 'Marketing' },
+  { salary: 50699.99, department: 'HR' },
+  { salary: 14000, department: 'admin' }
+]
+
+kgmchnb2> db.Emp.updateMany({"department":"Marketing"},{$set:{"salary":23000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+
+kgmchnb2> db.Emp.find({},{department:1,salary:1,_id:0})
+[
+  { salary: 45599.99, department: 'HR' },
+  { salary: 15000, department: 'admin' },
+  { salary: 55699.99, department: 'HR' },
+  { salary: 14000, department: 'admin' },
+  { salary: 23000, department: 'Marketing' },
+  { salary: 23000, department: 'Marketing' },
+  { salary: 23000, department: 'Marketing' },
+  { salary: 23000, department: 'Marketing' },
+  { salary: 50699.99, department: 'HR' },
+  { salary: 14000, department: 'admin' }
+]
+
+
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,_id:0})
+[
+  { ename: 'Bharath', salary: 45599.99, department: 'HR' },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  { ename: 'Antony', salary: 55699.99, department: 'HR' },
+  { ename: 'Uma', salary: 14000, department: 'admin' },
+  { ename: 'Pradhap', salary: 23000, department: 'Marketing' },
+  { ename: 'Raghu', salary: 23000, department: 'Marketing' },
+  { ename: 'Vinoth', salary: 23000, department: 'Marketing' },
+  { ename: 'Sethu', salary: 23000, department: 'Marketing' },
+  { ename: 'Jaya', salary: 50699.99, department: 'HR' },
+  { ename: 'Prema', salary: 14000, department: 'admin' }
+]
+
+
+kgmchnb2> db.Emp.updateOne({"ename":"Prema"},{$inc:{"salary":350}})
+
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,_id:0})
+[
+  { ename: 'Bharath', salary: 45599.99, department: 'HR' },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  { ename: 'Antony', salary: 55699.99, department: 'HR' },
+  { ename: 'Uma', salary: 14000, department: 'admin' },
+  { ename: 'Pradhap', salary: 23000, department: 'Marketing' },
+  { ename: 'Raghu', salary: 23000, department: 'Marketing' },
+  { ename: 'Vinoth', salary: 23000, department: 'Marketing' },
+  { ename: 'Sethu', salary: 23000, department: 'Marketing' },
+  { ename: 'Jaya', salary: 50699.99, department: 'HR' },
+  { ename: 'Prema', salary: 14350, department: 'admin' }
+]
+
+
+kgmchnb2> db.Emp.updateMany({"department":"Marketing"},{$inc:{salary:1100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,_id:0})
+[
+  { ename: 'Bharath', salary: 45599.99, department: 'HR' },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  { ename: 'Antony', salary: 55699.99, department: 'HR' },
+  { ename: 'Uma', salary: 14000, department: 'admin' },
+  { ename: 'Pradhap', salary: 24100, department: 'Marketing' },
+  { ename: 'Raghu', salary: 24100, department: 'Marketing' },
+  { ename: 'Vinoth', salary: 24100, department: 'Marketing' },
+  { ename: 'Sethu', salary: 24100, department: 'Marketing' },
+  { ename: 'Jaya', salary: 50699.99, department: 'HR' },
+  { ename: 'Prema', salary: 14350, department: 'admin' }
+]
+
+kgmchnb2> db.Emp.updateOne({"ename":"Antony"},{$min:{salary:13100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,_id:0})
+[
+  { ename: 'Bharath', salary: 45599.99, department: 'HR' },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  { ename: 'Antony', salary: 13100, department: 'HR' },
+  { ename: 'Uma', salary: 14000, department: 'admin' },
+  { ename: 'Pradhap', salary: 24100, department: 'Marketing' },
+  { ename: 'Raghu', salary: 24100, department: 'Marketing' },
+  { ename: 'Vinoth', salary: 24100, department: 'Marketing' },
+  { ename: 'Sethu', salary: 24100, department: 'Marketing' },
+  { ename: 'Jaya', salary: 50699.99, department: 'HR' },
+  { ename: 'Prema', salary: 14350, department: 'admin' }
+]
+
+kgmchnb2> db.Emp.updateOne({"ename":"Vinoth"},{$max:{salary:53100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,_id:0})
+[
+  { ename: 'Bharath', salary: 45599.99, department: 'HR' },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  { ename: 'Antony', salary: 13100, department: 'HR' },
+  { ename: 'Uma', salary: 14000, department: 'admin' },
+  { ename: 'Pradhap', salary: 24100, department: 'Marketing' },
+  { ename: 'Raghu', salary: 24100, department: 'Marketing' },
+  { ename: 'Vinoth', salary: 53100, department: 'Marketing' },
+  { ename: 'Sethu', salary: 24100, department: 'Marketing' },
+  { ename: 'Jaya', salary: 50699.99, department: 'HR' },
+  { ename: 'Prema', salary: 14350, department: 'admin' }
+]
+
+
+kgmchnb2> db.Emp.updateOne({"ename":"Antony"},{$mul:{salary:2}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,_id:0})
+[
+  { ename: 'Bharath', salary: 45599.99, department: 'HR' },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  { ename: 'Antony', salary: 26200, department: 'HR' },
+  { ename: 'Uma', salary: 14000, department: 'admin' },
+  { ename: 'Pradhap', salary: 24100, department: 'Marketing' },
+  { ename: 'Raghu', salary: 24100, department: 'Marketing' },
+  { ename: 'Vinoth', salary: 53100, department: 'Marketing' },
+  { ename: 'Sethu', salary: 24100, department: 'Marketing' },
+  { ename: 'Jaya', salary: 50699.99, department: 'HR' },
+  { ename: 'Prema', salary: 14350, department: 'admin' }
+]
+
+
+kgmchnb2> db.Emp.find()
+[
+  {
+    _id: ObjectId("649d62a1e394b02590847c8c"),
+    ename: 'Bharath',
+    gender: 'Male',
+    doj: ISODate("2023-01-12T00:00:00.000Z"),
+    salary: 45599.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d62a1e394b02590847c8d"),
+    ename: 'Anitha',
+    gender: 'Female',
+    doj: ISODate("2023-02-24T00:00:00.000Z"),
+    salary: 15000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8e"),
+    ename: 'Antony',
+    gender: 'Male',
+    doj: ISODate("2022-08-01T18:30:00.000Z"),
+    salary: 26200,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8f"),
+    ename: 'Uma',
+    gender: 'Female',
+    doj: ISODate("2023-03-15T00:00:00.000Z"),
+    salary: 14000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c90"),
+    ename: 'Pradhap',
+    gender: 'Male',
+    doj: ISODate("2022-09-20T00:00:00.000Z"),
+    salary: 24100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c91"),
+    ename: 'Raghu',
+    gender: 'Male',
+    doj: ISODate("2023-01-12T00:00:00.000Z"),
+    salary: 24100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c92"),
+    ename: 'Vinoth',
+    gender: 'Male',
+    doj: ISODate("2023-04-21T00:00:00.000Z"),
+    salary: 53100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c93"),
+    ename: 'Sethu',
+    gender: 'Male',
+    doj: ISODate("2023-01-12T00:00:00.000Z"),
+    salary: 24100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c94"),
+    ename: 'Jaya',
+    gender: 'Female',
+    doj: ISODate("2022-12-21T00:00:00.000Z"),
+    salary: 50699.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c95"),
+    ename: 'Prema',
+    gender: 'Female',
+    doj: ISODate("2023-03-15T00:00:00.000Z"),
+    salary: 14350,
+    department: 'admin'
+  }
+]
+kgmchnb2> db.Emp.updateMany({},{$unset:{doj:""}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 10,
+  modifiedCount: 10,
+  upsertedCount: 0
+}
+
+
+kgmchnb2> db.Emp.find()
+[
+  {
+    _id: ObjectId("649d62a1e394b02590847c8c"),
+    ename: 'Bharath',
+    gender: 'Male',
+    salary: 45599.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d62a1e394b02590847c8d"),
+    ename: 'Anitha',
+    gender: 'Female',
+    salary: 15000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8e"),
+    ename: 'Antony',
+    gender: 'Male',
+    salary: 26200,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8f"),
+    ename: 'Uma',
+    gender: 'Female',
+    salary: 14000,
+    department: 'admin'
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c90"),
+    ename: 'Pradhap',
+    gender: 'Male',
+    salary: 24100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c91"),
+    ename: 'Raghu',
+    gender: 'Male',
+    salary: 24100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c92"),
+    ename: 'Vinoth',
+    gender: 'Male',
+    salary: 53100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c93"),
+    ename: 'Sethu',
+    gender: 'Male',
+    salary: 24100,
+    department: 'Marketing'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c94"),
+    ename: 'Jaya',
+    gender: 'Female',
+    salary: 50699.99,
+    department: 'HR'
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c95"),
+    ename: 'Prema',
+    gender: 'Female',
+    salary: 14350,
+    department: 'admin'
+  }
+]
+
+kgmchnb2> db.Emp.updateMany({},{$set:{doj:new Date("2023-06-30T03:08:20Z")}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 10,
+  modifiedCount: 10,
+  upsertedCount: 0
+}
+
+
+kgmchnb2> db.Emp.find()
+[
+  {
+    _id: ObjectId("649d62a1e394b02590847c8c"),
+    ename: 'Bharath',
+    gender: 'Male',
+    salary: 45599.99,
+    department: 'HR',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d62a1e394b02590847c8d"),
+    ename: 'Anitha',
+    gender: 'Female',
+    salary: 15000,
+    department: 'admin',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8e"),
+    ename: 'Antony',
+    gender: 'Male',
+    salary: 26200,
+    department: 'HR',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d6388e394b02590847c8f"),
+    ename: 'Uma',
+    gender: 'Female',
+    salary: 14000,
+    department: 'admin',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c90"),
+    ename: 'Pradhap',
+    gender: 'Male',
+    salary: 24100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d63d4e394b02590847c91"),
+    ename: 'Raghu',
+    gender: 'Male',
+    salary: 24100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c92"),
+    ename: 'Vinoth',
+    gender: 'Male',
+    salary: 53100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d63fae394b02590847c93"),
+    ename: 'Sethu',
+    gender: 'Male',
+    salary: 24100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c94"),
+    ename: 'Jaya',
+    gender: 'Female',
+    salary: 50699.99,
+    department: 'HR',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    _id: ObjectId("649d6438e394b02590847c95"),
+    ename: 'Prema',
+    gender: 'Female',
+    salary: 14350,
+    department: 'admin',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  }
+]
+
+
+kgmchnb2> db.Emp.updateOne({"ename":"Anitha"},{$unset:{doj:new Date("2023-06-30T03:08:20Z")}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+kgmchnb2> db.Emp.find({},{ename:1,department:1,salary:1,doj:1,_id:0})
+[
+  {
+    ename: 'Bharath',
+    salary: 45599.99,
+    department: 'HR',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  { ename: 'Anitha', salary: 15000, department: 'admin' },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    department: 'HR',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Uma',
+    salary: 14000,
+    department: 'admin',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    department: 'Marketing',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    department: 'HR',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  },
+  {
+    ename: 'Prema',
+    salary: 14350,
+    department: 'admin',
+    doj: ISODate("2023-06-30T03:08:20.000Z")
+  }
+]
+
+
+kgmchnb2> db.Emp.updateMany({},{$rename:{department:"depart"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 10,
+  modifiedCount: 10,
+  upsertedCount: 0
+}
+
+
+kgmchnb2> db.Emp.find({},{ename:1,depart:1,salary:1,doj:1,_id:0})
+[
+  {
+    ename: 'Bharath',
+    salary: 45599.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  { ename: 'Anitha', salary: 15000, depart: 'admin' },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Uma',
+    salary: 14000,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Prema',
+    salary: 14350,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  }
+]
+
+Upsert: Update+insert
+-------------------------------------
+kgmchnb2> db.Emp.updateOne({ename:"Raghul"},{$set:{gender:"Male",salary:"23000.00",
+doj:new Date("2023-06-30"),depart:"Marketing"}},{upsert:true})
+
+
+{
+  acknowledged: true,
+  insertedId: ObjectId("649eac32aa6a0ba5e8f7c7e2"),
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 1
+}
+
+kgmchnb2> db.Emp.find({},{ename:1,depart:1,salary:1,doj:1,_id:0})
+[
+  {
+    ename: 'Bharath',
+    salary: 45599.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  { ename: 'Anitha', salary: 15000, depart: 'admin' },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Uma',
+    salary: 14000,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Prema',
+    salary: 14350,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Raghul',
+    depart: 'Marketing',
+    doj: ISODate("2023-06-30T00:00:00.000Z"),
+    salary: '23000.00'
+  }
+]
+
+
+kgmchnb2> db.Emp.updateOne({ename:"Bharath"},{$set:{gender:"Male",salary:"33000.00",
+doj:new Date("2022-05-03"),depart:"Associate"}},{upsert:true})
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+kgmchnb2> db.Emp.findAndModify({query:{ename:"kanagavalli"},update:
+{$set:{salary:40000.00,doj:new Date("2022-10-12"),depart:"Admin"}},upsert:true})
+null
+
+kgmchnb2> db.Emp.find({},{ename:1,depart:1,salary:1,doj:1,_id:0})
+[
+  {
+    ename: 'Bharath',
+    salary: '33000.00',
+    doj: ISODate("2022-05-03T00:00:00.000Z"),
+    depart: 'Associate'
+  },
+  { ename: 'Anitha', salary: 15000, depart: 'admin' },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Uma',
+    salary: 14000,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Prema',
+    salary: 14350,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Raghul',
+    depart: 'Marketing',
+    doj: ISODate("2023-06-30T00:00:00.000Z"),
+    salary: '23000.00'
+  },
+  {
+    ename: 'kanagavalli',
+    depart: 'Admin',
+    doj: ISODate("2022-10-12T00:00:00.000Z"),
+    salary: 40000
+  }
+]
+kgmchnb2> db.Emp.find({},{ename:1,depart:1,salary:1,doj:1,_id:0})
+[
+  {
+    ename: 'Bharath',
+    salary: '33000.00',
+    doj: ISODate("2022-05-03T00:00:00.000Z"),
+    depart: 'Associate'
+  },
+  { ename: 'Anitha', salary: 15000, depart: 'admin' },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Uma',
+    salary: 14000,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Prema',
+    salary: 14350,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Raghul',
+    depart: 'Marketing',
+    doj: ISODate("2023-06-30T00:00:00.000Z"),
+    salary: '23000.00'
+  }
+ {
+    ename: 'kanagavalli',
+    depart: 'Admin',
+    doj: ISODate("2022-10-12T00:00:00.000Z"),
+    salary: 40000
+  }
+]
+
+kgmchnb2> db.Emp.findAndModify({query:{ename:"kanagavalli"},
+update:{$set:{salary:25000.00,doj:new Date("2022-10-12"),depart:"Admin"}},upsert:false})
+{
+  _id: ObjectId("649eaf92aa6a0ba5e8f7c89f"),
+  ename: 'kanagavalli',
+  depart: 'Admin',
+  doj: ISODate("2022-10-12T00:00:00.000Z"),
+  salary: 25000
+}
+
+
+ARRAY ELEMENTS
+----------------------------
+DATA RETRIEVAL FROM AN ARRAY
+--------------------------------------
+
+
+kgmchnb2> db.DemoArray.insertMany([ 
+{
+Name:"Days", 
+Days:["Sun","Mon","Tues","Wed"]
+}, 
+{
+Name:"Month", 
+Month:[1,2,3,4,5,6,7,8,9,10]
+},
+{
+Name:"Colors",
+Colors:["red","blue"]
+}
+])  
+
+ok: 1 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("649eb1707a0916521aff4e56"),
+    '1': ObjectId("649eb1707a0916521aff4e57"),
+    '2': ObjectId("649eb1707a0916521aff4e58")
+  }
+}
+
+
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed' ] },
+  {
+    Name: 'Month',
+    Month: [
+      1, 2, 3, 4,  5,
+      6, 7, 8, 9, 10
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+
+
+kgmchnb2> db.DemoArray.find({Days:"Mon"},{"Days.$":1,_id:0})
+[ { Days: [ 'Mon' ] } ]
+
+kgmchnb2> db.DemoArray.find({Month:8},{"Month.$":1,_id:0})
+[ { Month: [ 8 ] } ]
+
+kgmchnb2> db.DemoArray.updateOne({Name:"Days"},{$push:{"Days":"Thurs"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed', 'Thurs' ] },
+  { Name: 'Month',
+    Month: [ 1,
+      1, 2, 3, 4,  5,
+      6, 7, 8, 9, 10
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+
+
+kgmchnb2> db.DemoArray.updateOne({Name:"Month"},{$pop:{"Month":1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed', 'Thurs' ] },
+  {
+    Name: 'Month',
+    Month: [
+      1, 2, 3, 4, 5,
+      6, 7, 8, 9
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+kgmchnb2> db.DemoArray.updateOne({Name:"Month"},{$pop:{"Month":-1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed', 'Thurs' ] },
+  {
+    Name: 'Month',
+    Month: [
+      2, 3, 4, 5,
+      6, 7, 8, 9
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+kgmchnb2>
+
+
+kgmchnb2> db.DemoArray.updateOne({Name:"Month"},{$pull:{"Month":7}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed', 'Thurs' ] },
+  {
+    Name: 'Month',
+    Month: [
+      2, 3, 4, 5,
+      6, 8, 9
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+kgmchnb2> db.DemoArray.updateOne({Name:"Days"},{$pull:{"Days":"Tues"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Wed', 'Thurs' ] },
+  {
+    Name: 'Month',
+    Month: [
+      2, 3, 4, 5,
+      6, 8, 9
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+
+
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Wed', 'Thurs' ] },
+  {
+    Name: 'Month',
+    Month: [
+      2, 3, 4, 5,
+      6, 8, 9
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+
+kgmchnb2> db.DemoArray.deleteOne({"Name":"Colors"})
+{ acknowledged: true, deletedCount: 1 }
+
+
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Wed', 'Thurs' ] },
+  {
+    Name: 'Month',
+    Month: [
+      2, 3, 4, 5,
+      6, 8, 9
+    ]
+  }
+]
+
+kgmchnb2> db.DemoArray.deleteMany({})
+{ acknowledged: true, deletedCount: 2 }
+
+
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+
+
+}
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed' ] },
+  {
+    Name: 'Month',
+    Month: [
+      1, 2, 3, 4,  5,
+      6, 7, 8, 9, 10
+    ]
+  },
+  { Name: 'Colors', Colors: [ 'red', 'blue' ] }
+]
+kgmchnb2> db.DemoArray.updateOne({"Name":"Colors"},
+{$push:{Colors:{$each:["Yellow","Orange","Pink","Purple"]}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+kgmchnb2> db.DemoArray.find({},{Name:1,Days:1,Month:1,Colors:1,_id:0})
+[
+  { Name: 'Days', Days: [ 'Sun', 'Mon', 'Tues', 'Wed' ] },
+  {
+    Name: 'Month',
+    Month: [
+      1, 2, 3, 4,  5,
+      6, 7, 8, 9, 10
+    ]
+  },
+  {
+    Name: 'Colors',
+    Colors: [ 'red', 'blue', 'Yellow', 'Orange', 'Pink', 'Purple' ]
+  }
+]
+
+
+kgmchnb2> db.Emp.find({},{ename:1,depart:1,doj:1,salary:1,_id:0})
+[eprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+  {cknowledged: true, deletedCount: 1 }
+    ename: 'Bharath',
+    salary: '33000.00',
+    doj: ISODate("2022-05-03T00:00:00.000Z"),
+    depart: 'Associate'
+  },
+  { ename: 'Anitha', salary: 15000, depart: 'admin' },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Uma',
+    salary: 14000,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Prema',
+    salary: 14350,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'admin'
+  },
+  {
+    ename: 'Raghul',
+    depart: 'Marketing',
+    doj: ISODate("2023-06-30T00:00:00.000Z"),
+    salary: '23000.00'
+  }
+]
+
+
+kgmchnb2> db.Emp.remove({"depart":"admin"})
+{ acknowledged: true, deletedCount: 3 }
+
+
+kgmchnb2> db.Emp.find({},{ename:1,depart:1,doj:1,salary:1,_id:0})
+[
+  {
+    ename: 'Bharath',
+    salary: '33000.00',
+    doj: ISODate("2022-05-03T00:00:00.000Z"),
+    depart: 'Associate'
+  },
+  {
+    ename: 'Antony',
+    salary: 26200,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Pradhap',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Raghu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Vinoth',
+    salary: 53100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Sethu',
+    salary: 24100,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'Marketing'
+  },
+  {
+    ename: 'Jaya',
+    salary: 50699.99,
+    doj: ISODate("2023-06-30T03:08:20.000Z"),
+    depart: 'HR'
+  },
+  {
+    ename: 'Raghul',
+    depart: 'Marketing',
+    doj: ISODate("2023-06-30T00:00:00.000Z"),
+    salary: '23000.00'
+  }
+]
+kgmchnb2>
+
+

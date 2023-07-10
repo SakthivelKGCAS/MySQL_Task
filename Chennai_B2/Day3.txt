@@ -1,0 +1,929 @@
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| blrdb              |
+| chnbatch2          |
+| information_schema |
+| kgm                |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| workbench          |
+| world              |
++--------------------+
+13 rows in set (0.84 sec)
+
+
+mysql> use chnbatch2;
+Database changed
+
+mysql> create table product_det(pid int,pname varchar(25),price double(10,2));
+Query OK, 0 rows affected, 1 warning (1.54 sec)
+
+mysql> desc product_det;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | int          | YES  |     | NULL    |       |
+| pname | varchar(25)  | YES  |     | NULL    |       |
+| price | double(10,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.17 sec)
+
+mysql> insert into product_det values(23,'Samsung',15899.99),(56,'Iphone11',45899.99),(58,'Iphone14',87999.99),(62,'Oneplus',25600.00),(878,'Redmi',32000.00);
+Query OK, 5 rows affected (0.17 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into product_det values(27,'SamsungPro',19899.99),(26,'Realme',23899.99),(65,'Vivo',35999.99),(98,'Oppo',28000.00),(898,'Nokia',10000.00),(900,'NokiaG21',19000.00);
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from product_det;
++------+------------+----------+
+| pid  | pname      | price    |
++------+------------+----------+
+|   23 | Samsung    | 15899.99 |
+|   56 | Iphone11   | 45899.99 |
+|   58 | Iphone14   | 87999.99 |
+|   62 | Oneplus    | 25600.00 |
+|  878 | Redmi      | 32000.00 |
+|   27 | SamsungPro | 19899.99 |
+|   26 | Realme     | 23899.99 |
+|   65 | Vivo       | 35999.99 |
+|   98 | Oppo       | 28000.00 |
+|  898 | Nokia      | 10000.00 |
+|  900 | NokiaG21   | 19000.00 |
++------+------------+----------+
+11 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname like 'O%';
++------+---------+----------+
+| pid  | pname   | price    |
++------+---------+----------+
+|   62 | Oneplus | 25600.00 |
+|   98 | Oppo    | 28000.00 |
++------+---------+----------+
+2 rows in set (0.05 sec)
+
+mysql> select * from product_det where pname like 'R%';
++------+--------+----------+
+| pid  | pname  | price    |
++------+--------+----------+
+|  878 | Redmi  | 32000.00 |
+|   26 | Realme | 23899.99 |
++------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname like 'N%';
++------+----------+----------+
+| pid  | pname    | price    |
++------+----------+----------+
+|  898 | Nokia    | 10000.00 |
+|  900 | NokiaG21 | 19000.00 |
++------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname like 'I%';
++------+----------+----------+
+| pid  | pname    | price    |
++------+----------+----------+
+|   56 | Iphone11 | 45899.99 |
+|   58 | Iphone14 | 87999.99 |
++------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname like '%o';
++------+------------+----------+
+| pid  | pname      | price    |
++------+------------+----------+
+|   27 | SamsungPro | 19899.99 |
+|   65 | Vivo       | 35999.99 |
+|   98 | Oppo       | 28000.00 |
++------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname like 'o%o';
++------+-------+----------+
+| pid  | pname | price    |
++------+-------+----------+
+|   98 | Oppo  | 28000.00 |
++------+-------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from product_det where pname like '_am%';
++------+------------+----------+
+| pid  | pname      | price    |
++------+------------+----------+
+|   23 | Samsung    | 15899.99 |
+|   27 | SamsungPro | 19899.99 |
++------+------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname like 'v__o';
++------+-------+----------+
+| pid  | pname | price    |
++------+-------+----------+
+|   65 | Vivo  | 35999.99 |
++------+-------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from product_det where pname like 'Nokia_';
+Empty set (0.00 sec)
+
+mysql> select * from product_det where pname like 'Noki_';
++------+-------+----------+
+| pid  | pname | price    |
++------+-------+----------+
+|  898 | Nokia | 10000.00 |
++------+-------+----------+
+1 row in set (0.00 sec)
+
+mysql> alter table product_det add dom date;
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from product_det;
++------+------------+----------+------+
+| pid  | pname      | price    | dom  |
++------+------------+----------+------+
+|   23 | Samsung    | 15899.99 | NULL |
+|   56 | Iphone11   | 45899.99 | NULL |
+|   58 | Iphone14   | 87999.99 | NULL |
+|   62 | Oneplus    | 25600.00 | NULL |
+|  878 | Redmi      | 32000.00 | NULL |
+|   27 | SamsungPro | 19899.99 | NULL |
+|   26 | Realme     | 23899.99 | NULL |
+|   65 | Vivo       | 35999.99 | NULL |
+|   98 | Oppo       | 28000.00 | NULL |
+|  898 | Nokia      | 10000.00 | NULL |
+|  900 | NokiaG21   | 19000.00 | NULL |
++------+------------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> update product_det set dom = '2023-01-12' where price>15000 and price<26000;
+Query OK, 5 rows affected (0.08 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from product_det;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   56 | Iphone11   | 45899.99 | NULL       |
+|   58 | Iphone14   | 87999.99 | NULL       |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | NULL       |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   65 | Vivo       | 35999.99 | NULL       |
+|   98 | Oppo       | 28000.00 | NULL       |
+|  898 | Nokia      | 10000.00 | NULL       |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> update product_det set dom = '2023-02-16' where  price<=10000;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> update product_det set dom = '2023-03-23' where  price>=30000 and price<=45000;
+Query OK, 2 rows affected (0.05 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update product_det set dom = '2023-06-01' where  price>=45000;
+Query OK, 2 rows affected (0.07 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from product_det;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   98 | Oppo       | 28000.00 | NULL       |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> update product_det set dom = '2023-04-09' where price = 28000;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from product_det;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname in ('Samsung','Nokia','vivo','epson','havell');
++------+---------+----------+------------+
+| pid  | pname   | price    | dom        |
++------+---------+----------+------------+
+|   23 | Samsung | 15899.99 | 2023-01-12 |
+|   65 | Vivo    | 35999.99 | 2023-03-23 |
+|  898 | Nokia   | 10000.00 | 2023-02-16 |
++------+---------+----------+------------+
+3 rows in set (0.04 sec)
+
+mysql> select * from product_det where price in (15899.99,10000.00,100000.00,19000,35999.00);
++------+----------+----------+------------+
+| pid  | pname    | price    | dom        |
++------+----------+----------+------------+
+|   23 | Samsung  | 15899.99 | 2023-01-12 |
+|  898 | Nokia    | 10000.00 | 2023-02-16 |
+|  900 | NokiaG21 | 19000.00 | 2023-01-12 |
++------+----------+----------+------------+
+3 rows in set (0.00 sec)
+
+
+mysql> select * from product_det where dom in ('2023-03-23','2023-06-22','2023-05-23');
++------+-------+----------+------------+
+| pid  | pname | price    | dom        |
++------+-------+----------+------------+
+|  878 | Redmi | 32000.00 | 2023-03-23 |
+|   65 | Vivo  | 35999.99 | 2023-03-23 |
++------+-------+----------+------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select * from product_det where price between 20000 and 40000;
++------+---------+----------+------------+
+| pid  | pname   | price    | dom        |
++------+---------+----------+------------+
+|   62 | Oneplus | 25600.00 | 2023-01-12 |
+|  878 | Redmi   | 32000.00 | 2023-03-23 |
+|   26 | Realme  | 23899.99 | 2023-01-12 |
+|   65 | Vivo    | 35999.99 | 2023-03-23 |
+|   98 | Oppo    | 28000.00 | 2023-04-09 |
++------+---------+----------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from product_det where dom between '2023-02-01' and '2023-03-31';
++------+-------+----------+------------+
+| pid  | pname | price    | dom        |
++------+-------+----------+------------+
+|  878 | Redmi | 32000.00 | 2023-03-23 |
+|   65 | Vivo  | 35999.99 | 2023-03-23 |
+|  898 | Nokia | 10000.00 | 2023-02-16 |
++------+-------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product_det where price not between 20000 and 40000;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from product_det where dom not between '2023-02-01' and '2023-03-31';
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from product_det where price not in (15899.99,10000.00,100000.00,19000,35999.00);
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
++------+------------+----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from product_det where pname not like 'Noki_';
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from product_det order by pname;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
++------+------------+----------+------------+
+11 rows in set (0.03 sec)
+
+mysql> select * from product_det order by pname desc;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from product_det order by price;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
++------+------------+----------+------------+
+11 rows in set (0.03 sec)
+
+mysql> select * from product_det order by price desc;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from product_det order by dom;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from product_det order by dom desc;
++------+------------+----------+------------+
+| pid  | pname      | price    | dom        |
++------+------------+----------+------------+
+|   56 | Iphone11   | 45899.99 | 2023-06-01 |
+|   58 | Iphone14   | 87999.99 | 2023-06-01 |
+|   98 | Oppo       | 28000.00 | 2023-04-09 |
+|  878 | Redmi      | 32000.00 | 2023-03-23 |
+|   65 | Vivo       | 35999.99 | 2023-03-23 |
+|  898 | Nokia      | 10000.00 | 2023-02-16 |
+|   23 | Samsung    | 15899.99 | 2023-01-12 |
+|   62 | Oneplus    | 25600.00 | 2023-01-12 |
+|   27 | SamsungPro | 19899.99 | 2023-01-12 |
+|   26 | Realme     | 23899.99 | 2023-01-12 |
+|  900 | NokiaG21   | 19000.00 | 2023-01-12 |
++------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
++--------+------------+-------------+-----------+
+11 rows in set (0.00 sec)
+
+mysql> select distinct designation from emp_det;
++-------------+
+| designation |
++-------------+
+| FullStack   |
+| WebDesigner |
+| JavaStack   |
+| Tester      |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp_det;
++--------+------------+-------------+-----------+
+| empid  | empname    | designation | salary    |
++--------+------------+-------------+-----------+
+| dev01  | Madhu      | FullStack   | 100000.00 |
+| dev02  | Preethi    | FullStack   | 100000.00 |
+| des14  | Bharath    | WebDesigner |  70000.00 |
+| des51  | hari       | WebDesigner |  27000.00 |
+| dev10  | Jasline    | FullStack   |  30000.00 |
+| dev25  | Pooja      | JavaStack   |  50000.00 |
+| des85  | Jayaseelan | WebDesigner |  75000.00 |
+| Test02 | Lal        | Tester      |  18000.00 |
+| dev187 | Bhaskaran  | JavaStack   |  50000.00 |
+| Test03 | Madhan     | Tester      |  18000.00 |
+| Test04 | Antony     | Tester      |  15555.00 |
++--------+------------+-------------+-----------+
+11 rows in set (0.00 sec)
+
+
+mysql> select count(empname) from emp_det;
++----------------+
+| count(empname) |
++----------------+
+|             11 |
++----------------+
+1 row in set (0.09 sec)
+
+mysql> select max(salary) from emp_det;
++-------------+
+| max(salary) |
++-------------+
+|   100000.00 |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> select min(salary) from emp_det;
++-------------+
+| min(salary) |
++-------------+
+|    15555.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary) from emp_det;
++-------------+
+| sum(salary) |
++-------------+
+|   553555.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary) from emp_det;
++--------------+
+| avg(salary)  |
++--------------+
+| 50323.181818 |
++--------------+
+1 row in set (0.03 sec)
+
+
+mysql> select count(empname) as No_of_Employee from emp_det;
++----------------+
+| No_of_Employee |
++----------------+
+|             11 |
++----------------+
+1 row in set (0.00 sec)
+
+
+mysql> select sum(salary) as Total_Salaried from emp_det;
++----------------+
+| Total_Salaried |
++----------------+
+|      553555.00 |
++----------------+
+1 row in set (0.00 sec)
+
+
+mysql> select designation,count(empname) from emp_det group by designation;
++-------------+----------------+
+| designation | count(empname) |
++-------------+----------------+
+| FullStack   |              3 |
+| WebDesigner |              3 |
+| JavaStack   |              2 |
+| Tester      |              3 |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select designation,min(salary) from emp_det group by designation;
++-------------+-------------+
+| designation | min(salary) |
++-------------+-------------+
+| FullStack   |    30000.00 |
+| WebDesigner |    27000.00 |
+| JavaStack   |    50000.00 |
+| Tester      |    15555.00 |
++-------------+-------------+
+4 rows in set (0.04 sec)
+
+
+mysql> select designation,max(salary) from emp_det group by designation;
++-------------+-------------+
+| designation | max(salary) |
++-------------+-------------+
+| FullStack   |   100000.00 |
+| WebDesigner |    75000.00 |
+| JavaStack   |    50000.00 |
+| Tester      |    18000.00 |
++-------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select designation,sum(salary) from emp_det group by designation;
++-------------+-------------+
+| designation | sum(salary) |
++-------------+-------------+
+| FullStack   |   230000.00 |
+| WebDesigner |   172000.00 |
+| JavaStack   |   100000.00 |
+| Tester      |    51555.00 |
++-------------+-------------+
+4 rows in set (0.03 sec)
+
+mysql> select designation,avg(salary) from emp_det group by designation;
++-------------+--------------+
+| designation | avg(salary)  |
++-------------+--------------+
+| FullStack   | 76666.666667 |
+| WebDesigner | 57333.333333 |
+| JavaStack   | 50000.000000 |
+| Tester      | 17185.000000 |
++-------------+--------------+
+4 rows in set (0.04 sec)
+
+
+
+mysql> select designation,min(salary) from emp_det group by designation having min(salary)<20000;
++-------------+-------------+
+| designation | min(salary) |
++-------------+-------------+
+| Tester      |    15555.00 |
++-------------+-------------+
+1 row in set (0.02 sec)
+
+mysql> select designation,max(salary) from emp_det group by designation having max(salary)>50000;
++-------------+-------------+
+| designation | max(salary) |
++-------------+-------------+
+| FullStack   |   100000.00 |
+| WebDesigner |    75000.00 |
++-------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> create table demo_null(id int);
+Query OK, 0 rows affected (2.81 sec)
+
+mysql> desc demo_null;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+1 row in set (0.47 sec)
+
+mysql> insert into demo_null values(256);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into demo_null values(2);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into demo_null values(1025);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into demo_null values();
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from demo_null;
++------+
+| id   |
++------+
+|  256 |
+|    2 |
+| 1025 |
+| NULL |
++------+
+4 rows in set (0.01 sec)
+
+
+mysql> create table demo_ntnull(id int not null);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> desc demo_ntnull;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | NO   |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+1 row in set (0.04 sec)
+
+mysql> insert into demo_ntnull values(125);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into demo_ntnull values(1);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into demo_ntnull values(3000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into demo_ntnull values();
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+
+
+
+Not Null:
+
+It doesn't allows the missing value and allows the dublicate values.
+
+Unique Key:
+
+It doesn't allows dublicate values and allows the null values.
+
+mysql> create table demo_uniq(id int unique key);
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> desc demo_uniq;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | YES  | UNI | NULL    |       |
++-------+------+------+-----+---------+-------+
+1 row in set (0.06 sec)
+
+mysql> insert into demo_uniq values(21);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into demo_uniq values(2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into demo_uniq values(2);
+ERROR 1062 (23000): Duplicate entry '2' for key 'demo_uniq.id'
+mysql> insert into demo_uniq values();
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from demo_uniq;
++------+
+| id   |
++------+
+| NULL |
+|    2 |
+|   21 |
++------+
+3 rows in set (0.00 sec)
+
+Primary Key:
+
+It doen't allows the null values  and dublicate values in a table.
+
+
+mysql> create table prod_det(pid int primary key,pname varchar(25),price double(10,2));
+Query OK, 0 rows affected, 1 warning (0.26 sec)
+
+mysql> desc prod_det;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | int          | NO   | PRI | NULL    |       |
+| pname | varchar(25)  | YES  |     | NULL    |       |
+| price | double(10,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+mysql> insert into prod_det values(101,'Iphone11',45899.99),(102,'Iphone14',75899.99),(156,'Samsung',21000.00),(163,'Oppo',30000.00);
+Query OK, 4 rows affected (0.25 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into prod_det values(175,'Realme',32899.99),(182,'Nokia',15899.99),(170,'SamsungPro',23000.00),(193,'Vivo',25000.00);
+Query OK, 4 rows affected (0.09 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into prod_det values(175,'Realme',32899.99),(182,'Nokia',15899.99),(170,'SamsungPro',23000.00),(193,'Vivo',25000.00);
+ERROR 1062 (23000): Duplicate entry '175' for key 'prod_det.PRIMARY'
+
+mysql> insert into prod_det values();
+ERROR 1364 (HY000): Field 'pid' doesn't have a default value
+
+mysql> insert into prod_det values(,'NokiaG21',18999.99);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','NokiaG21',18999.99)' at line 1
+
+
+mysql> select * from prod_det;
++-----+------------+----------+
+| pid | pname      | price    |
++-----+------------+----------+
+| 101 | Iphone11   | 45899.99 |
+| 102 | Iphone14   | 75899.99 |
+| 156 | Samsung    | 21000.00 |
+| 163 | Oppo       | 30000.00 |
+| 170 | SamsungPro | 23000.00 |
+| 175 | Realme     | 32899.99 |
+| 182 | Nokia      | 15899.99 |
+| 193 | Vivo       | 25000.00 |
++-----+------------+----------+
+8 rows in set (0.00 sec)
+
+
+mysql> create table cust_det(cid int primary key,cname varchar(25),location varchar(25),
+pid int,foreign key(pid) references prod_det(pid));
+Query OK, 0 rows affected (1.04 sec)
+
+mysql> desc cust_det;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(25) | YES  |     | NULL    |       |
+| location | varchar(25) | YES  |     | NULL    |       |
+| pid      | int         | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into cust_det values(2001,'Bharath',156);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into cust_det values(2001,'Bharath','Chennai',156);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into cust_det values(2002,'Pradeep','Cuddalore',102);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into cust_det values(203,'Jayaseelan','Singapore',182);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into cust_det values(2013,'Venki','USA',170);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into cust_det values(2070,'Bhaskaran','Kanchipuram',190);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`chnbatch2`.`cust_det`, CONSTRAINT `cust_det_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `prod_det` (`pid`))
+mysql> insert into cust_det values(2070,'Bhaskaran','Kanchipuram',193);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from cust_det;
++------+------------+-------------+------+
+| cid  | cname      | location    | pid  |
++------+------------+-------------+------+
+|  203 | Jayaseelan | Singapore   |  182 |
+| 2001 | Bharath    | Chennai     |  156 |
+| 2002 | Pradeep    | Cuddalore   |  102 |
+| 2013 | Venki      | USA         |  170 |
+| 2070 | Bhaskaran  | Kanchipuram |  193 |
++------+------------+-------------+------+
+5 rows in set (0.00 sec)
+
+
+mysql> create table bill(bno int primary key auto_increment,pid int,cid int,bdate date,
+billamount double(10,2),foreign key(pid) references prod_det(pid),
+foreign key(cid) references cust_det(cid));
+
+Query OK, 0 rows affected, 1 warning (0.33 sec)
+
+mysql> desc bill;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| bno        | int          | NO   | PRI | NULL    | auto_increment |
+| pid        | int          | YES  | MUL | NULL    |                |
+| cid        | int          | YES  | MUL | NULL    |                |
+| bdate      | date         | YES  |     | NULL    |                |
+| billamount | double(10,2) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.05 sec)
+
+mysql> insert into bill(pid,cid,bdate,billamount)values(182,203,'2023-03-12',16500.50);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select * from bill;
++-----+------+------+------------+------------+
+| bno | pid  | cid  | bdate      | billamount |
++-----+------+------+------------+------------+
+|   1 |  182 |  203 | 2023-03-12 |   16500.50 |
++-----+------+------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> alter table bill auto_increment = 3500;
+Query OK, 0 rows affected (0.26 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into bill(pid,cid,bdate,billamount)values(156,2001,'2023-04-04',22555.50);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into bill(pid,cid,bdate,billamount)values(102,2002,'2023-06-22',77555.50);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from bill;
++------+------+------+------------+------------+
+| bno  | pid  | cid  | bdate      | billamount |
++------+------+------+------------+------------+
+|    1 |  182 |  203 | 2023-03-12 |   16500.50 |
+| 3500 |  156 | 2001 | 2023-04-04 |   22555.50 |
+| 3501 |  102 | 2002 | 2023-06-22 |   77555.50 |
++------+------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
